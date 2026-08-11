@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: mat_FaceSkin_00_00
-  m_Shader: {fileID: 4800000, guid: 623597543feefbc4a86d6b51bf39cb38, type: 3}
+  m_Shader: {fileID: 4800000, guid: 60d646244f75ab84f8eb12819a6d87ff, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -119,6 +119,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _HighlightTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _IridescenceMaskMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -132,6 +136,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -160,6 +168,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutlineTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OutlineWidthMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Outline_NormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -235,11 +251,24 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Ints: []
+    m_Ints:
+    - _DirectionalLight_HighlightMode: 0
+    - _DirectionalLight_Use: 0
+    - _OutlineMode: 0
+    - _Outline_UseNormalMap: 0
+    - _StencilComp: 8
+    - _StencilOpFail: 0
+    - _StencilOpPass: 2
+    - _ToonMaterialVersion: 0
+    - _Use_1stAs2nd: 0
+    - _Use_BaseAs1st: 0
     m_Floats:
     - _1st2nd_Shades_Feather: 1
+    - _1stTo2nd_ShadeFeather: 0.491
+    - _1stTo2nd_ShadeStart: 0.829
     - _1st_ShadeColor_Feather: 0.491
     - _1st_ShadeColor_Step: 0.829
+    - _2DLightStrength: 1
     - _2nd_ShadeColor_Feather: 1
     - _2nd_ShadeColor_Step: 1
     - _AORemapMax: 1
@@ -272,6 +301,8 @@ Material:
     - _BaseColorVisible: 1
     - _BaseColor_Step: 0.829
     - _BaseShade_Feather: 0.491
+    - _BaseTo1st_ShadeFeather: 0.491
+    - _BaseTo1st_ShadeStart: 0.829
     - _Base_Speed: 0
     - _Blend: 0
     - _BlendMode: 0
@@ -300,6 +331,10 @@ Material:
     - _DetailSmoothnessScale: 1
     - _DiffusionProfile: 0
     - _DiffusionProfileHash: 0
+    - _DirectionalLight_DiffuseStrength: 0.5
+    - _DirectionalLight_HighlightSize: 0.3
+    - _DirectionalLight_HighlightStrength: 0.5
+    - _DirectionalLight_Intensity: 0.5
     - _DisplacementLockObjectScale: 1
     - _DisplacementLockTilingScale: 1
     - _DisplacementMode: 0
@@ -401,8 +436,14 @@ Material:
     - _Offset_X_Axis_BLD: 0.062
     - _Offset_Y_Axis_BLD: 0.55
     - _Offset_Z: 0
+    - _OutlineFar: 100
+    - _OutlineNear: 3
+    - _OutlineOffsetZ: 0
     - _OutlineOverridden: 0
     - _OutlineVisible: 1
+    - _OutlineWidth: 0
+    - _Outline_BaseColorBlend: 0.5
+    - _Outline_LightColorBlend: 0.5
     - _Outline_Width: 0
     - _PPDLodThreshold: 5
     - _PPDMaxSamples: 15
@@ -520,6 +561,9 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorShift: {r: 0, g: 0, b: 0, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
+    - _DirectionalLight_Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DirectionalLight_Direction: {r: 0, g: -1, b: 0, a: 0}
+    - _DirectionalLight_ViewPosition: {r: 0, g: 0, b: 1, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
@@ -527,10 +571,12 @@ Material:
     - _Emissive_Color: {r: 0, g: 0, b: 0, a: 1}
     - _FirstShadeMaskColor: {r: 0, g: 1, b: 1, a: 1}
     - _HighColor: {r: 1, g: 0.97324866, b: 0.8915094, a: 1}
+    - _HighlightColor: {r: 1, g: 0.97324866, b: 0.8915094, a: 1}
     - _HighlightMaskColor: {r: 1, g: 1, b: 0, a: 1}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
     - _OutlineMaskColor: {r: 0, g: 0, b: 0, a: 1}
     - _Outline_Color: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
     - _RimLightColor: {r: 0.7735849, g: 0.6688256, b: 0.6458704, a: 1}
@@ -544,6 +590,7 @@ Material:
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
     - _ViewShift: {r: 0, g: 0, b: 0, a: 1}
+    - _White: {r: 1, g: 1, b: 1, a: 1}
     - emissive: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.unity.ai.navigation": {
-      "version": "2.0.13",
+      "version": "2.0.14",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -10,7 +10,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.burst": {
-      "version": "1.8.29",
+      "version": "1.8.30",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -20,10 +20,12 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collab-proxy": {
-      "version": "2.12.4",
+      "version": "2.13.5",
       "depth": 0,
       "source": "registry",
-      "dependencies": {},
+      "dependencies": {
+        "com.unity.collections": "2.6.8"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.collections": {
@@ -44,12 +46,13 @@
       "dependencies": {}
     },
     "com.unity.film-internal-utilities": {
-      "version": "0.19.2-preview",
-      "depth": 0,
+      "version": "0.20.0-preview",
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.timeline": "1.2.18",
-        "com.unity.modules.uielements": "1.0.0"
+        "com.unity.modules.uielements": "1.0.0",
+        "com.unity.modules.imageconversion": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -72,7 +75,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {
-      "version": "1.19.0",
+      "version": "1.20.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -153,6 +156,13 @@
         "com.unity.searcher": "4.9.3"
       }
     },
+    "com.unity.springbone": {
+      "version": "https://github.com/unity3d-jp/UnityChanSpringBone.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9415071549aee47c094657d9ef5af239b96c201f"
+    },
     "com.unity.test-framework": {
       "version": "1.7.0",
       "depth": 0,
@@ -186,12 +196,12 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.toonshader": {
-      "version": "0.11.1-preview",
+      "version": "0.15.0-preview",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.render-pipelines.core": "10.0.0",
-        "com.unity.film-internal-utilities": "0.19.2-preview"
+        "com.unity.render-pipelines.core": "17.0.3",
+        "com.unity.film-internal-utilities": "0.20.0-preview"
       },
       "url": "https://packages.unity.com"
     },
@@ -208,11 +218,11 @@
       }
     },
     "com.unity.visualscripting": {
-      "version": "1.9.11",
+      "version": "1.9.12",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.ugui": "1.0.0",
+        "com.unity.ugui": "2.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"

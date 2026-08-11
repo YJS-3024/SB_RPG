@@ -9,8 +9,14 @@ Shader "URP_Custom/Toon_URP"
 
         _1st_ShadeMap("1st Shade Map", 2D) = "white" {}
         _2nd_ShadeMap("2nd Shade Map", 2D) = "white" {}
+        [Toggle(_)] _Use_BaseAs1st("Use Base Map as 1st Shade Map", Integer) = 1
+        [Toggle(_)] _Use_1stAs2nd("Use 1st Shade Map as 2nd Shade Map", Integer) = 1
         _1st_ShadeColor("1st Shade Color", Color) = (0.75, 0.75, 0.75, 1)
         _2nd_ShadeColor("2nd Shade Color", Color) = (0.55, 0.55, 0.55, 1)
+        _BaseTo1st_ShadeStart("Base to 1st Shade Start", Range(0, 1)) = 0.55
+        _BaseTo1st_ShadeFeather("Base to 1st Shade Feather", Range(0.001, 1)) = 0.05
+        _1stTo2nd_ShadeStart("1st to 2nd Shade Start", Range(0, 1)) = 0.25
+        _1stTo2nd_ShadeFeather("1st to 2nd Shade Feather", Range(0.001, 1)) = 0.05
         _1st_ShadeColor_Step("1st Shade Step", Range(0, 1)) = 0.55
         _1st_ShadeColor_Feather("1st Shade Feather", Range(0.001, 1)) = 0.05
         _2nd_ShadeColor_Step("2nd Shade Step", Range(0, 1)) = 0.25
@@ -23,8 +29,38 @@ Shader "URP_Custom/Toon_URP"
         _Emissive_Color("Emissive Color", Color) = (0, 0, 0, 1)
         _EmissiveIntensity("Emissive Intensity", Float) = 1
 
-        _Outline_Width("Outline Width", Range(0, 10)) = 0
-        _Outline_Color("Outline Color", Color) = (0, 0, 0, 1)
+        _2DLightStrength("2D Light Strength", Range(0, 1)) = 1
+        [Toggle(_)] _DirectionalLight_Use("Use Directional Light", Integer) = 0
+        _DirectionalLight_Direction("Directional Light Direction", Vector) = (0, -1, 0, 0)
+        _DirectionalLight_Color("Directional Light Color", Color) = (1, 1, 1, 1)
+        _DirectionalLight_Intensity("Directional Light Intensity", Float) = 0.5
+        _DirectionalLight_DiffuseStrength("Directional Light Diffuse Strength", Range(0, 1)) = 0.5
+        _DirectionalLight_ViewPosition("Directional Light View Position", Vector) = (0, 0, 1, 0)
+        _HighlightTex("Highlight Map", 2D) = "white" {}
+        _HighlightColor("Highlight Color", Color) = (1, 1, 1, 1)
+        _DirectionalLight_HighlightMode("Directional Light Highlight Mode", Integer) = 0
+        _DirectionalLight_HighlightStrength("Directional Light Highlight Strength", Range(0, 1)) = 0.5
+        _DirectionalLight_HighlightSize("Directional Light Highlight Size", Range(0, 1)) = 0.3
+        _NormalMap("Normal Map", 2D) = "bump" {}
+        _BumpScale("Normal Scale", Range(0, 1)) = 1
+
+        _OutlineMode("Outline Mode", Integer) = 0
+        _OutlineWidth("Outline Width", Float) = 5
+        _OutlineWidthMap("Outline Width Map", 2D) = "white" {}
+        _OutlineColor("Outline Color", Color) = (0.1, 0.1, 0.1, 1)
+        _OutlineTex("Outline Map", 2D) = "white" {}
+        _Outline_BaseColorBlend("Blend Base Color to Outline", Range(0, 1)) = 0.5
+        _Outline_LightColorBlend("Blend Light Color to Outline", Range(0, 1)) = 0.5
+        _OutlineOffsetZ("Outline Z Offset", Float) = 0.75
+        _OutlineNear("Outline Near", Float) = 0.5
+        _OutlineFar("Outline Far", Float) = 100
+        [Toggle(_)] _Outline_UseNormalMap("Use Outline Normal Map", Integer) = 0
+        _Outline_NormalMap("Outline Normal Map", 2D) = "bump" {}
+
+        [IntRange] _StencilRef("Stencil Reference", Range(0, 255)) = 128
+        [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Compare", Integer) = 8
+        [Enum(UnityEngine.Rendering.StencilOp)] _StencilOpPass("Stencil Pass Op", Integer) = 2
+        [Enum(UnityEngine.Rendering.StencilOp)] _StencilOpFail("Stencil Pass Op Fail", Integer) = 0
 
         [Enum(UnityEngine.Rendering.CullMode)] _Cull("Cull", Float) = 2
     }
@@ -74,6 +110,12 @@ Shader "URP_Custom/Toon_URP"
                 half4 _Color;
                 half4 _1st_ShadeColor;
                 half4 _2nd_ShadeColor;
+                int _Use_BaseAs1st;
+                int _Use_1stAs2nd;
+                half _BaseTo1st_ShadeStart;
+                half _BaseTo1st_ShadeFeather;
+                half _1stTo2nd_ShadeStart;
+                half _1stTo2nd_ShadeFeather;
                 half _1st_ShadeColor_Step;
                 half _1st_ShadeColor_Feather;
                 half _2nd_ShadeColor_Step;
@@ -81,8 +123,8 @@ Shader "URP_Custom/Toon_URP"
                 half _Clipping_Level;
                 half4 _Emissive_Color;
                 half _EmissiveIntensity;
-                half _Outline_Width;
-                half4 _Outline_Color;
+                half _OutlineWidth;
+                half4 _OutlineColor;
                 half _Cull;
             CBUFFER_END
 
@@ -121,14 +163,15 @@ Shader "URP_Custom/Toon_URP"
                 float4 shadowCoord = TransformWorldToShadowCoord(positionWS);
                 Light mainLight = GetMainLight(shadowCoord);
                 half ndotl = saturate(dot(normalWS, mainLight.direction) * 0.5h + 0.5h);
+                half toonLight = saturate(ndotl * mainLight.shadowAttenuation);
 
-                half firstBand = smoothstep(_1st_ShadeColor_Step - _1st_ShadeColor_Feather, _1st_ShadeColor_Step + _1st_ShadeColor_Feather, ndotl);
-                half secondBand = smoothstep(_2nd_ShadeColor_Step - _2nd_ShadeColor_Feather, _2nd_ShadeColor_Step + _2nd_ShadeColor_Feather, ndotl);
+                half firstBand = smoothstep(_BaseTo1st_ShadeStart - _BaseTo1st_ShadeFeather, _BaseTo1st_ShadeStart + _BaseTo1st_ShadeFeather, toonLight);
+                half secondBand = smoothstep(_1stTo2nd_ShadeStart - _1stTo2nd_ShadeFeather, _1stTo2nd_ShadeStart + _1stTo2nd_ShadeFeather, toonLight);
                 half3 toon = lerp(shade2, shade1, secondBand);
                 toon = lerp(toon, baseColor, firstBand);
 
-                half3 lit = toon * mainLight.color * mainLight.shadowAttenuation;
-                lit += baseColor * SampleSH(normalWS);
+                half3 lit = toon * mainLight.color;
+                lit += toon * SampleSH(normalWS);
 
                 #if defined(_ADDITIONAL_LIGHTS)
                 uint pixelLightCount = GetAdditionalLightsCount();
@@ -149,8 +192,12 @@ Shader "URP_Custom/Toon_URP"
                 half clipMask = SAMPLE_TEXTURE2D(_ClippingMask, sampler_ClippingMask, input.uv).r;
                 clip(baseSample.a * clipMask - _Clipping_Level);
 
-                half3 shade1 = baseSample.rgb * _1st_ShadeColor.rgb * SAMPLE_TEXTURE2D(_1st_ShadeMap, sampler_1st_ShadeMap, input.uv).rgb;
-                half3 shade2 = baseSample.rgb * _2nd_ShadeColor.rgb * SAMPLE_TEXTURE2D(_2nd_ShadeMap, sampler_2nd_ShadeMap, input.uv).rgb;
+                half3 shadeMap1 = SAMPLE_TEXTURE2D(_1st_ShadeMap, sampler_1st_ShadeMap, input.uv).rgb;
+                shadeMap1 = lerp(shadeMap1, baseSample.rgb, saturate(_Use_BaseAs1st));
+                half3 shadeMap2 = SAMPLE_TEXTURE2D(_2nd_ShadeMap, sampler_2nd_ShadeMap, input.uv).rgb;
+                shadeMap2 = lerp(shadeMap2, shadeMap1, saturate(_Use_1stAs2nd));
+                half3 shade1 = shadeMap1 * _1st_ShadeColor.rgb;
+                half3 shade2 = shadeMap2 * _2nd_ShadeColor.rgb;
                 half3 color = ApplyToonLighting(baseSample.rgb, shade1, shade2, normalize(input.normalWS), input.positionWS);
 
                 half3 emission = SAMPLE_TEXTURE2D(_Emissive_Tex, sampler_Emissive_Tex, input.uv).rgb * _Emissive_Color.rgb * _EmissiveIntensity;
@@ -194,8 +241,8 @@ Shader "URP_Custom/Toon_URP"
                 half _Clipping_Level;
                 half4 _Emissive_Color;
                 half _EmissiveIntensity;
-                half _Outline_Width;
-                half4 _Outline_Color;
+                half _OutlineWidth;
+                half4 _OutlineColor;
                 half _Cull;
             CBUFFER_END
 
@@ -216,7 +263,7 @@ Shader "URP_Custom/Toon_URP"
             Varyings Vert(Attributes input)
             {
                 Varyings output;
-                float3 positionOS = input.positionOS.xyz + normalize(input.normalOS) * (_Outline_Width * 0.001);
+                float3 positionOS = input.positionOS.xyz + normalize(input.normalOS) * (_OutlineWidth * 0.001);
                 VertexPositionInputs positionInputs = GetVertexPositionInputs(positionOS);
                 output.positionCS = positionInputs.positionCS;
                 output.uv = TRANSFORM_TEX(input.uv, _BaseMap);
@@ -228,8 +275,8 @@ Shader "URP_Custom/Toon_URP"
             {
                 half alpha = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv).a * SAMPLE_TEXTURE2D(_ClippingMask, sampler_ClippingMask, input.uv).r;
                 clip(alpha - _Clipping_Level);
-                half3 color = MixFog(_Outline_Color.rgb, input.fogFactor);
-                return half4(color, _Outline_Color.a);
+                half3 color = MixFog(_OutlineColor.rgb, input.fogFactor);
+                return half4(color, _OutlineColor.a);
             }
             ENDHLSL
         }
@@ -269,8 +316,8 @@ Shader "URP_Custom/Toon_URP"
                 half _Clipping_Level;
                 half4 _Emissive_Color;
                 half _EmissiveIntensity;
-                half _Outline_Width;
-                half4 _Outline_Color;
+                half _OutlineWidth;
+                half4 _OutlineColor;
                 half _Cull;
             CBUFFER_END
 
@@ -306,6 +353,8 @@ Shader "URP_Custom/Toon_URP"
             ENDHLSL
         }
     }
+
+    CustomEditor "UnityEditor.Rendering.Toon.UnityToon3Das2DGUI"
 
     FallBack "Hidden/Universal Render Pipeline/FallbackError"
 }
