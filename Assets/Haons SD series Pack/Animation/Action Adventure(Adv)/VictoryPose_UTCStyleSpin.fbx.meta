@@ -5,7 +5,7 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: VictoryPose_UTCStyleSpin
+    second: VictoryPose_UTCStyleSpin_4spin
   - first:
       74: -1165076652838969172
     second: VictoryPose_UTCStyleSpin_Hold@loop
@@ -37,11 +37,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: VictoryPose_UTCStyleSpin
+      name: VictoryPose_UTCStyleSpin_4spin
       takeName: Take 001
       internalID: 0
       firstFrame: 10
-      lastFrame: 70
+      lastFrame: 80
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -64,7 +64,9 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: Info
+      - path: Mesh_Costume_Base_Female
+        weight: 0
+      - path: Mesh_Costume_Base_male
         weight: 0
       - path: Root
         weight: 1
@@ -112,6 +114,8 @@ ModelImporter:
         weight: 1
       - path: Root/center/Hips/Spine/Chest/Upper_Chest/Clavicle_L/Upper_Arm_L/Lower_Arm_L/Hand_L/Prop_L
         weight: 1
+      - path: Root/center/Hips/Spine/Chest/Upper_Chest/Clavicle_L/Upper_Arm_L/Lower_Arm_L/Hand_L/Prop_L/Prop_L_Dummy
+        weight: 1
       - path: Root/center/Hips/Spine/Chest/Upper_Chest/Clavicle_L/Upper_Arm_L/Lower_Arm_L/Lower_Arm_L_twist_00
         weight: 1
       - path: Root/center/Hips/Spine/Chest/Upper_Chest/Clavicle_L/Upper_Arm_L/Upper_Arm_L_twist_00
@@ -150,6 +154,8 @@ ModelImporter:
         weight: 1
       - path: Root/center/Hips/Spine/Chest/Upper_Chest/Clavicle_R/Upper_Arm_R/Lower_Arm_R/Hand_R/Prop_R
         weight: 1
+      - path: Root/center/Hips/Spine/Chest/Upper_Chest/Clavicle_R/Upper_Arm_R/Lower_Arm_R/Hand_R/Prop_R/Prop_R_dummy
+        weight: 1
       - path: Root/center/Hips/Spine/Chest/Upper_Chest/Clavicle_R/Upper_Arm_R/Lower_Arm_R/Lower_Arm_R_twist_00
         weight: 1
       - path: Root/center/Hips/Spine/Chest/Upper_Chest/Clavicle_R/Upper_Arm_R/Upper_Arm_R_twist_00
@@ -160,12 +166,24 @@ ModelImporter:
         weight: 1
       - path: Root/center/Hips/Spine/Chest/Upper_Chest/Neck/Head/Eye_L
         weight: 1
+      - path: Root/center/Hips/Spine/Chest/Upper_Chest/Neck/Head/Eye_L/Eye_00_L
+        weight: 1
+      - path: Root/center/Hips/Spine/Chest/Upper_Chest/Neck/Head/Eye_L/Eye_00_L/Eye_00_L_Cover
+        weight: 1
       - path: Root/center/Hips/Spine/Chest/Upper_Chest/Neck/Head/Eye_R
+        weight: 1
+      - path: Root/center/Hips/Spine/Chest/Upper_Chest/Neck/Head/Eye_R/Eye_00_R
+        weight: 1
+      - path: Root/center/Hips/Spine/Chest/Upper_Chest/Neck/Head/Eye_R/Eye_00_R/Eye_00_R_Cover
         weight: 1
       - path: Root/center/Hips/Spine/Chest/Upper_Chest/Neck/Head/Face_BlendShapes
         weight: 1
       - path: Root/center/Hips/Spine/Chest/Upper_Chest/Neck/Head/Jaw
         weight: 1
+      - path: Root/center/Hips/Spine/Chest/Upper_Chest/Neck/Head/Mesh_Hair_SkinHead_Light
+        weight: 0
+      - path: Root/center/Hips/Spine/Chest/Upper_Chest/Neck/Head/old_Face_BlendShapes
+        weight: 0
       - path: Root/center/Hips/Upper_Leg_L
         weight: 1
       - path: Root/center/Hips/Upper_Leg_L/Lower_Leg_L
@@ -173,6 +191,8 @@ ModelImporter:
       - path: Root/center/Hips/Upper_Leg_L/Lower_Leg_L/Foot_L
         weight: 1
       - path: Root/center/Hips/Upper_Leg_L/Lower_Leg_L/Foot_L/Toes_L
+        weight: 1
+      - path: Root/center/Hips/Upper_Leg_L/Lower_Leg_L/Knee_L
         weight: 1
       - path: Root/center/Hips/Upper_Leg_L/Lower_Leg_L/Lower_Leg_L_Twist_00
         weight: 1
@@ -186,12 +206,14 @@ ModelImporter:
         weight: 1
       - path: Root/center/Hips/Upper_Leg_R/Lower_Leg_R/Foot_R/Toes_R
         weight: 1
+      - path: Root/center/Hips/Upper_Leg_R/Lower_Leg_R/Knee_R
+        weight: 1
       - path: Root/center/Hips/Upper_Leg_R/Lower_Leg_R/Lower_Leg_R_Twist_00
         weight: 1
       - path: Root/center/Hips/Upper_Leg_R/Upper_Leg_R_Twist_00
         weight: 1
       maskType: 1
-      maskSource: {fileID: 101100000, guid: 457fa94621a1e6f469ad75beb836d5fd, type: 2}
+      maskSource: {fileID: 31900000, guid: fa934f6b38a816e4b87e20d21d304612, type: 2}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: VictoryPose_UTCStyleSpin_Hold@loop
@@ -830,13 +852,18 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Face_BlendShapes
       parentName: Head
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.000000059466075, y: 2.2446822e-15, z: -0.000000037748983, w: 1}
-      scale: {x: 1, y: 1, z: 1}
+      position: {x: 0.00000064912194, y: 0.00000003433261, z: 0.00000028454167}
+      rotation: {x: 0.0000005268761, y: -0.0000008819339, z: 0.00000039584324, w: 1}
+      scale: {x: 0.9999998, y: 0.99999976, z: 1.0000001}
     - name: Mesh_Hair_SkinHead_Light
       parentName: Head
       position: {x: 2.502931e-10, y: -8.881784e-18, z: 5.111783e-16}
       rotation: {x: -0.0000007013465, y: -0.0000010211606, z: 0.0000009042053, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: old_Face_BlendShapes
+      parentName: Head
+      position: {x: 0.6654855, y: 0.039243083, z: 0.00000054421815}
+      rotation: {x: 0.7071075, y: -0.0000000040708312, z: -0.70710605, w: -0.0000000040708397}
       scale: {x: 1, y: 1, z: 1}
     - name: Clavicle_L
       parentName: Upper_Chest
@@ -874,6 +901,11 @@ ModelImporter:
       rotation: {x: -0.000000050291423, y: -0.000000016763803, z: -0.000000059604645,
         w: 1}
       scale: {x: 1, y: 1, z: 0.9999999}
+    - name: Prop_L_Dummy
+      parentName: Prop_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     - name: Finger_L_Ring_Proximal
       parentName: Hand_L
       position: {x: -0.053629894, y: -0.0077135847, z: 0.0052197287}
@@ -970,6 +1002,11 @@ ModelImporter:
       rotation: {x: -0.00000009965152, y: -0.000000036321563, z: -0.00000010430811,
         w: 1}
       scale: {x: 1.0000002, y: 1, z: 1.0000001}
+    - name: Prop_R_dummy
+      parentName: Prop_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 0.99999994, y: 1, z: 1}
     - name: Finger_R_Ring_Proximal
       parentName: Hand_R
       position: {x: -0.053629912, y: -0.0077135847, z: -0.0052197287}
@@ -1100,16 +1137,6 @@ ModelImporter:
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.000028252605, y: 6.854961e-12, z: 0.000000014901161, w: 1}
       scale: {x: 1, y: 1.0000001, z: 1}
-    - name: Info
-      parentName: _Avatar_HaonSdCharacter_Common(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-      scale: {x: 1, y: 1, z: 1}
-    - name: DummyCube
-      parentName: _Avatar_HaonSdCharacter_Common(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -1137,8 +1164,8 @@ ModelImporter:
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-  productId: 62560
-  packageName: Action Adventure SD Motion Pack (new Version)
-  packageVersion: 2025.0b
+  productId: 181364
+  packageName: Official School Uniform - Haon SD series
+  packageVersion: 2026.8
   assetPath: Assets/Haons SD series Pack/Animation/Action Adventure(Adv)/VictoryPose_UTCStyleSpin.fbx
-  uploadId: 896716
+  uploadId: 969276

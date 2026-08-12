@@ -8,17 +8,20 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: mat_Prop_Tent1_v1
-  m_Shader: {fileID: 4800000, guid: 60d646244f75ab84f8eb12819a6d87ff, type: 3}
+  m_Shader: {fileID: 4800000, guid: be891319084e9d147b09d89e80ce60e0, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords:
+  m_ValidKeywords:
+  - UTS_RP_BUILTIN
   - _EMISSIVE_SIMPLE
+  - _IS_CLIPPING_OFF
+  - _IS_OUTLINE_CLIPPING_NO
+  - _OUTLINE_NML
+  m_InvalidKeywords:
   - _INVERSE_Z_AXIS_BLD_ON
   - _IS_ANGELRING_OFF
   - _IS_BLENDADDTOHICOLOR_ON
   - _IS_BLENDADDTOMATCAP_ON
-  - _IS_CLIPPING_OFF
   - _IS_FILTER_HICUTPOINTLIGHTCOLOR_ON
   - _IS_LIGHTCOLOR_1ST_SHADE_ON
   - _IS_LIGHTCOLOR_2ND_SHADE_ON
@@ -27,8 +30,6 @@ Material:
   - _IS_LIGHTCOLOR_HIGHCOLOR_ON
   - _IS_LIGHTCOLOR_MATCAP_ON
   - _IS_LIGHTCOLOR_RIMLIGHT_ON
-  - _IS_OUTLINE_CLIPPING_NO
-  - _OUTLINE_NML
   - _SET_SYSTEMSHADOWSTOBASE_ON
   - _USE_1STAS2ND_ON
   - _USE_BASEAS1ST_ON
@@ -69,7 +70,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 023bd16411f3e41308841debdd40f7db, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BentNormalMap:
@@ -282,7 +283,6 @@ Material:
     - _CoatMask: 0
     - _ColorShift_Speed: 0
     - _ComposerMaskMode: 0
-    - _Cull: 2
     - _CullMode: 0
     - _CullModeForward: 2
     - _Cutoff: 0.5

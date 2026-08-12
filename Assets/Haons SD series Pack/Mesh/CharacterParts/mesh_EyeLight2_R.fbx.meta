@@ -1,16 +1,21 @@
 fileFormatVersion: 2
-guid: 31364a575c32cb64f90d13e86d7d1737
+guid: d1a5ae0a5aec24fe1b262363cf8bf27f
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: EyeLight
-    second: {fileID: 2100000, guid: 1c1db893a9d84ae42b5f40edda45fce3, type: 2}
+    second: {fileID: 2100000, guid: 21ec2323d8f8a9b42a39bb084a42273c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EyeLight1
+    second: {fileID: 2100000, guid: 21ec2323d8f8a9b42a39bb084a42273c, type: 2}
   materials:
-    materialImportMode: 2
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -61,6 +66,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -112,8 +120,8 @@ ModelImporter:
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-  productId: 176846
-  packageName: "Basic Hand Props & Cooking & Camping - Haon\u2019s SD Prop Pack"
-  packageVersion: 2026.03
+  productId: 181364
+  packageName: Official School Uniform - Haon SD series
+  packageVersion: 2026.8
   assetPath: Assets/Haons SD series Pack/Mesh/CharacterParts/mesh_EyeLight2_R.fbx
-  uploadId: 884948
+  uploadId: 969276

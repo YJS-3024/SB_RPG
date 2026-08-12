@@ -1,21 +1,21 @@
 fileFormatVersion: 2
-guid: 59394882f15d73e4d83125be580c93b6
+guid: d159ff94979054e638f1637ad6d6f57b
 ModelImporter:
-  serializedVersion: 20101
+  serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Eye_00
-    second: {fileID: 2100000, guid: 0abb7812f3946c042bb64628c9d54d70, type: 2}
+    second: {fileID: 2100000, guid: 21ec2323d8f8a9b42a39bb084a42273c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material #3792
-    second: {fileID: 2100000, guid: 0abb7812f3946c042bb64628c9d54d70, type: 2}
+    second: {fileID: 2100000, guid: 21ec2323d8f8a9b42a39bb084a42273c, type: 2}
   materials:
-    materialImportMode: 1
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -24,9 +24,8 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -49,10 +48,12 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -64,6 +65,7 @@ ModelImporter:
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -74,6 +76,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -105,14 +108,17 @@ ModelImporter:
   animationType: 2
   humanoidOversampling: 1
   avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-  productId: 176846
-  packageName: "Basic Hand Props & Cooking & Camping - Haon\u2019s SD Prop Pack"
-  packageVersion: 2026.03
+  productId: 181364
+  packageName: Official School Uniform - Haon SD series
+  packageVersion: 2026.8
   assetPath: Assets/Haons SD series Pack/Mesh/CharacterParts/mesh_Eye0_R.fbx
-  uploadId: 884948
+  uploadId: 969276

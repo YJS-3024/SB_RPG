@@ -8,12 +8,17 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: mat_PrefabBase_UnVisible
-  m_Shader: {fileID: 4800000, guid: 617339a47ba3de142a2690c3079b6aa1, type: 3}
+  m_Shader: {fileID: 4800000, guid: e4468eb8a8320f7488ddbb0e591f9fbc, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords:
+  m_ValidKeywords:
+  - UTS_RP_BUILTIN
   - _EMISSIVE_SIMPLE
+  - _IS_TRANSCLIPPING_ON
+  - _OUTLINE_NML
+  - _SHADINGGRADEMAP
+  - _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+  m_InvalidKeywords:
   - _GLOSSYREFLECTIONS_OFF
   - _INVERSE_Z_AXIS_BLD_ON
   - _IS_ANGELRING_OFF
@@ -26,20 +31,17 @@ Material:
   - _IS_LIGHTCOLOR_HIGHCOLOR_ON
   - _IS_LIGHTCOLOR_MATCAP_ON
   - _IS_LIGHTCOLOR_RIMLIGHT_ON
-  - _IS_TRANSCLIPPING_ON
-  - _OUTLINE_NML
   - _SET_SYSTEMSHADOWSTOBASE_ON
-  - _SHADINGGRADEMAP
-  - _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
   - _SPECULARHIGHLIGHTS_OFF
   - _USE_1STAS2ND_ON
   - _USE_BASEAS1ST_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap:
     IgnoreProjection: true
+    RenderType: Transparent
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -539,10 +541,10 @@ Material:
     - _AngelRingMaskColor: {r: 0, g: 1, b: 0, a: 1}
     - _AngelRing_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 1, g: 0, b: 1, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColorMaskColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 0, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorShift: {r: 0, g: 0, b: 0, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
