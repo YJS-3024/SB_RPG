@@ -10,20 +10,19 @@ Material:
   m_Name: mat_AccHead0_4FC6FA
   m_Shader: {fileID: 4800000, guid: be891319084e9d147b09d89e80ce60e0, type: 3}
   m_Parent: {fileID: 2100000, guid: 882a14b852b80fc49a394ceab8459104, type: 2}
-  m_ModifiedSerializedProperties: 16
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - UTS_RP_BUILTIN
   - _DISABLE_OUTLINE
   - _EMISSIVE_SIMPLE
   - _IS_CLIPPING_TRANSMODE
   - _IS_OUTLINE_CLIPPING_YES
-  - _OUTLINE_POS
+  - _OUTLINE_NML
   m_InvalidKeywords:
   - _IS_ANGELRING_OFF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2450
+  m_CustomRenderQueue: -1
   stringTagMap:
     IgnoreProjection: False
     RenderType: TransparentCutout
@@ -38,11 +37,14 @@ Material:
     m_Floats:
     - _1st_ShadeColor_Feather: 0.135
     - _BaseShade_Feather: 0.135
+    - _OUTLINE: 0
+    - _RimLight_Power: 0.067
     m_Colors:
     - _1st_ShadeColor: {r: 0.15873085, g: 0.582426, b: 0.8207547, a: 1}
     - _2nd_ShadeColor: {r: 0.30554247, g: 0.23949805, b: 0.4339623, a: 1}
     - _BaseColor: {r: 0.31007475, g: 0.778107, b: 0.9811321, a: 1}
     - _Color: {r: 0.31007475, g: 0.778107, b: 0.9811321, a: 1}
+    - _RimLightColor: {r: 0.2830189, g: 0.2657796, b: 0.20692419, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &5731694137993871308

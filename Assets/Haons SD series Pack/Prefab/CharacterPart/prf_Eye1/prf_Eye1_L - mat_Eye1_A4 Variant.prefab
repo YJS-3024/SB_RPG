@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6936602827739459187
+--- !u!1001 &1589186936163562630
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8,42 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3167257417945809548, guid: afe05fa4689f7484394dfda61d7a08a1, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 7a4728d81a03fc24e806a6267fc1f87f, type: 2}
-    - target: {fileID: 4692783718697181159, guid: afe05fa4689f7484394dfda61d7a08a1, type: 3}
-      propertyPath: slots.Array.data[0].targetMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 7a4728d81a03fc24e806a6267fc1f87f, type: 2}
-    - target: {fileID: 6224703048447712487, guid: afe05fa4689f7484394dfda61d7a08a1, type: 3}
-      propertyPath: slots.Array.data[0].targetMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 7a4728d81a03fc24e806a6267fc1f87f, type: 2}
-    - target: {fileID: 8243303579186197276, guid: afe05fa4689f7484394dfda61d7a08a1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 18672616700717105, guid: e6f975cb70b5c3241b117e3ac49a760d, type: 3}
       propertyPath: m_Name
       value: prf_Eye1_L - mat_Eye1_A4 Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 795314185772298891, guid: e6f975cb70b5c3241b117e3ac49a760d, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 795314185772298891, guid: e6f975cb70b5c3241b117e3ac49a760d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 795314185772298891, guid: e6f975cb70b5c3241b117e3ac49a760d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 795314185772298891, guid: e6f975cb70b5c3241b117e3ac49a760d, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 295174743054130289, guid: e6f975cb70b5c3241b117e3ac49a760d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d7b8ce828d72e4740b2a0574dd2c4720, type: 2}
     - target: {fileID: 795314185772298891, guid: e6f975cb70b5c3241b117e3ac49a760d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -84,10 +56,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1692837345048486805, guid: e6f975cb70b5c3241b117e3ac49a760d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1746117271865712257, guid: e6f975cb70b5c3241b117e3ac49a760d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -96,17 +64,77 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: d7b8ce828d72e4740b2a0574dd2c4720, type: 2}
-    - target: {fileID: 3912339874925668386, guid: e6f975cb70b5c3241b117e3ac49a760d, type: 3}
-      propertyPath: slots.Array.data[0].targetMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: d7b8ce828d72e4740b2a0574dd2c4720, type: 2}
-    - target: {fileID: 4495461929834205350, guid: e6f975cb70b5c3241b117e3ac49a760d, type: 3}
-      propertyPath: slots.Array.data[0].targetMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: d7b8ce828d72e4740b2a0574dd2c4720, type: 2}
     m_RemovedComponents:
-    - {fileID: 662392974919432467, guid: afe05fa4689f7484394dfda61d7a08a1, type: 3}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 18672616700717105, guid: e6f975cb70b5c3241b117e3ac49a760d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3573713985640635968}
+    - targetCorrespondingSourceObject: {fileID: 18672616700717105, guid: e6f975cb70b5c3241b117e3ac49a760d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2854024682670202176}
   m_SourcePrefab: {fileID: 100100000, guid: e6f975cb70b5c3241b117e3ac49a760d, type: 3}
+--- !u!23 &959064188501556578 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1964320221100935652, guid: e6f975cb70b5c3241b117e3ac49a760d, type: 3}
+  m_PrefabInstance: {fileID: 1589186936163562630}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1607710009846750391 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 18672616700717105, guid: e6f975cb70b5c3241b117e3ac49a760d, type: 3}
+  m_PrefabInstance: {fileID: 1589186936163562630}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3573713985640635968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607710009846750391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6348cd5adb98ad4d9f691715020a04e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaterialControllerC
+  groupingMode: 0
+  targetFolder: {fileID: 0}
+  folderMaterials: []
+  meshMaterials:
+  - {fileID: 2100000, guid: ee80d417a088139489d5079c71242ad3, type: 2}
+  - {fileID: 2100000, guid: d7b8ce828d72e4740b2a0574dd2c4720, type: 2}
+  groups:
+  - groupName: "\uADF8\uB8F9 1"
+    meshKeywordsInput: 
+    materialKeywordsInput: 
+    keywordsInput: 
+    meshKeywords: []
+    materialKeywords: []
+    bulkMaterial: {fileID: 0}
+    groupTargets: []
+    isExpanded: 1
+    showPreview: 0
+  unassignedTargets:
+  - {fileID: 0}
+  - {fileID: 0}
+  unassignedExpanded: 1
+--- !u!114 &2854024682670202176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607710009846750391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faf9a6014d5aeea4b98bfe04087e391c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaterialTargetA
+  displayName: prf_Eye1_L - mat_Eye1_A4
+  targetRenderer: {fileID: 959064188501556578}
+  slots:
+  - slotIndex: 0
+    slotName: Slot 0 (mat_Eye1_A3)
+    targetMaterial: {fileID: 2100000, guid: d7b8ce828d72e4740b2a0574dd2c4720, type: 2}
+    isSelected: 1

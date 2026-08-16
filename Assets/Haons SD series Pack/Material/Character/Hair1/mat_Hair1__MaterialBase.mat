@@ -12,7 +12,6 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 16
   m_ValidKeywords:
-  - UTS_RP_BUILTIN
   - _DISABLE_OUTLINE
   - _EMISSIVE_SIMPLE
   - _IS_CLIPPING_OFF
@@ -20,6 +19,10 @@ Material:
   - _OUTLINE_NML
   m_InvalidKeywords:
   - _IS_ANGELRING_OFF
+  - _IS_FILTER_LIGHTCOLOR_ON
+  - _IS_LIGHTCOLOR_1ST_SHADE_ON
+  - _IS_LIGHTCOLOR_2ND_SHADE_ON
+  - _IS_LIGHTCOLOR_BASE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -189,11 +192,11 @@ Material:
     m_Ints:
     - _ToonMaterialVersion: 0
     m_Floats:
-    - _1st2nd_Shades_Feather: 0.097
-    - _1st_ShadeColor_Feather: 0.072
-    - _1st_ShadeColor_Step: 0.5
-    - _2nd_ShadeColor_Feather: 0.097
-    - _2nd_ShadeColor_Step: 0.314
+    - _1st2nd_Shades_Feather: 0.236
+    - _1st_ShadeColor_Feather: 0.171
+    - _1st_ShadeColor_Step: 0.74
+    - _2nd_ShadeColor_Feather: 0.236
+    - _2nd_ShadeColor_Step: 0.24
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ARSampler_AlphaOn: 0
@@ -219,8 +222,8 @@ Material:
     - _AutoRenderQueue: 1
     - _BaseColorOverridden: 0
     - _BaseColorVisible: 1
-    - _BaseColor_Step: 0.5
-    - _BaseShade_Feather: 0.072
+    - _BaseColor_Step: 0.74
+    - _BaseShade_Feather: 0.171
     - _Base_Speed: 0
     - _BlurLevelMatcap: 0
     - _BlurLevelSGM: 0
@@ -324,12 +327,12 @@ Material:
     - _PPDLodThreshold: 5
     - _PPDMaxSamples: 15
     - _PPDMinSamples: 5
-    - _RimLight: 0
+    - _RimLight: 1
     - _RimLightOverridden: 0
     - _RimLightVisible: 1
     - _RimLight_FeatherOff: 0
     - _RimLight_InsideMask: 0.0001
-    - _RimLight_Power: 0.1
+    - _RimLight_Power: 0.067
     - _Rotate_EmissiveUV: 0
     - _Rotate_MatCapUV: 0
     - _Rotate_NormalMapForMatCapUV: 0
@@ -340,7 +343,7 @@ Material:
     - _SecondShadeOverridden: 0
     - _SecondShadeVisible: 1
     - _Set_SystemShadowsToBase: 1
-    - _ShadeColor_Step: 0.314
+    - _ShadeColor_Step: 0.24
     - _Smoothness: 0.5
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
@@ -362,7 +365,7 @@ Material:
     - _StencilWriteMaskDepth: 32
     - _StencilWriteMaskGBuffer: 3
     - _StencilWriteMaskMV: 128
-    - _StepOffset: 0
+    - _StepOffset: 0.74
     - _SubsurfaceMask: 1
     - _TexWorldScale: 1
     - _TexWorldScaleEmissive: 1
@@ -384,8 +387,8 @@ Material:
     - _UVDetail: 0
     - _Unlit_Intensity: 0
     - _UseShadowThreshold: 0
-    - _Use_1stAs2nd: 0
-    - _Use_BaseAs1st: 0
+    - _Use_1stAs2nd: 1
+    - _Use_BaseAs1st: 1
     - _ZOverDrawMode: 0
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 4
@@ -396,8 +399,8 @@ Material:
     - _simpleUI: 0
     - _utsTechnique: 0
     m_Colors:
-    - _1st_ShadeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _2nd_ShadeColor: {r: 0, g: 0, b: 0, a: 1}
+    - _1st_ShadeColor: {r: 1, g: 1, b: 1, a: 1}
+    - _2nd_ShadeColor: {r: 1, g: 1, b: 1, a: 1}
     - _AngelRingMaskColor: {r: 0, g: 1, b: 0, a: 1}
     - _AngelRing_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
@@ -418,7 +421,7 @@ Material:
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineMaskColor: {r: 0, g: 0, b: 0, a: 1}
     - _Outline_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _RimLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimLightColor: {r: 0.2830189, g: 0.2657796, b: 0.20692419, a: 1}
     - _RimLightMaskColor: {r: 1, g: 0, b: 1, a: 1}
     - _SecondShadeMaskColor: {r: 0, g: 0, b: 1, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}

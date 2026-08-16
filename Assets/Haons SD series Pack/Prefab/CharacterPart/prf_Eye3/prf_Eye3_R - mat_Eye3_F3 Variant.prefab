@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &3641940482779368198
+--- !u!1001 &8461121005770780238
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8,14 +8,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 907231033420211618, guid: d51c7c23d3904f145b27ea3123fe5926, type: 3}
-      propertyPath: slots.Array.data[0].targetMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: a9f7d0c31eef1d341939f7725a809170, type: 2}
-    - target: {fileID: 2834733320019956950, guid: d51c7c23d3904f145b27ea3123fe5926, type: 3}
-      propertyPath: slots.Array.data[0].targetMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: da848624b2ebb9d4fb3523f1b93e5995, type: 2}
     - target: {fileID: 2901638758042373136, guid: d51c7c23d3904f145b27ea3123fe5926, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -24,14 +16,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4514018650365416089, guid: f077eb19f8b48ae4cb694a51246c00f3, type: 3}
-      propertyPath: slots.Array.data[0].targetMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 225b23b3bd37a7f49814ce3eae40655c, type: 2}
-    - target: {fileID: 4592824204455326974, guid: f077eb19f8b48ae4cb694a51246c00f3, type: 3}
-      propertyPath: slots.Array.data[0].targetMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 225b23b3bd37a7f49814ce3eae40655c, type: 2}
     - target: {fileID: 6104232564855437359, guid: f077eb19f8b48ae4cb694a51246c00f3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -39,10 +23,6 @@ PrefabInstance:
     - target: {fileID: 565868885419383965, guid: f72b684d4124a444baf770121cd5aa73, type: 3}
       propertyPath: m_Name
       value: prf_Eye3_R - mat_Eye3_F3 Variant
-      objectReference: {fileID: 0}
-    - target: {fileID: 905661595834517031, guid: f72b684d4124a444baf770121cd5aa73, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 905661595834517031, guid: f72b684d4124a444baf770121cd5aa73, type: 3}
       propertyPath: m_LocalScale.x
@@ -96,16 +76,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1218842721834044798, guid: f72b684d4124a444baf770121cd5aa73, type: 3}
-      propertyPath: slots.Array.data[0].targetMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: ac15296c761e57e44bc93041428e9c05, type: 2}
     - target: {fileID: 2079153058649079112, guid: f72b684d4124a444baf770121cd5aa73, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: ac15296c761e57e44bc93041428e9c05, type: 2}
-    - target: {fileID: 4224333144168361777, guid: f72b684d4124a444baf770121cd5aa73, type: 3}
-      propertyPath: slots.Array.data[0].targetMaterial
+    - target: {fileID: 5929146303755920199, guid: f72b684d4124a444baf770121cd5aa73, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: ac15296c761e57e44bc93041428e9c05, type: 2}
     - target: {fileID: 6299064281828553377, guid: f72b684d4124a444baf770121cd5aa73, type: 3}

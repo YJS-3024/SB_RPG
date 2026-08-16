@@ -23341,6 +23341,7 @@ GameObject:
   - component: {fileID: 9120273200972048761}
   - component: {fileID: 1884389002288982591}
   - component: {fileID: 4554743523211307620}
+  - component: {fileID: 5089126901896722552}
   m_Layer: 0
   m_Name: Cube - HaonSDEssentialPackageInstaller
   m_TagString: Untagged
@@ -23443,6 +23444,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5089126901896722552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3446068681034466231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73f9eb7b5596eb64e8af50217aff9e91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HaonSDEssentialPackageInstaller
 --- !u!1 &3460275123932992242
 GameObject:
   m_ObjectHideFlags: 0
@@ -36679,7 +36692,7 @@ Transform:
   m_GameObject: {fileID: 5459150103239676836}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.4, y: 36.9, z: 0}
+  m_LocalPosition: {x: -43.4, y: 36.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -36742,14 +36755,14 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5459150103239676836}
-  m_Text: '+Pink Material Solution : After installing UTS, register ''URP'' into
-    Project Settings > Graphics > Default Render Pipeline.'
+  m_Text: "+Pink Material Solution : After installing UTS, register 'URP' into \nProject
+    Settings > Graphics > Default Render Pipeline."
   m_OffsetZ: 0
-  m_CharacterSize: 3
+  m_CharacterSize: 5
   m_LineSpacing: 1
   m_Anchor: 0
   m_Alignment: 0
-  m_TabSize: 4
+  m_TabSize: 6
   m_FontSize: 0
   m_FontStyle: 0
   m_RichText: 1
@@ -54672,8 +54685,8 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8252267591415428056}
-  m_Text: 'Playing this scene will run a script (HaonSDEssentialPackageInstaller.cs)
-    that automatically installs the required packages.
+  m_Text: 'Playing this scene will run a script that automatically installs the required
+    packages. (HaonSDEssentialPackageInstaller.cs)
 
 
     If you do not want automatic

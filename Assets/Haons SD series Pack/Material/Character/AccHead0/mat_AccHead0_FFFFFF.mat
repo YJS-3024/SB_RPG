@@ -12,12 +12,11 @@ Material:
   m_Parent: {fileID: 2100000, guid: 882a14b852b80fc49a394ceab8459104, type: 2}
   m_ModifiedSerializedProperties: 16
   m_ValidKeywords:
-  - UTS_RP_BUILTIN
   - _DISABLE_OUTLINE
   - _EMISSIVE_SIMPLE
   - _IS_CLIPPING_TRANSMODE
   - _IS_OUTLINE_CLIPPING_YES
-  - _OUTLINE_POS
+  - _OUTLINE_NML
   m_InvalidKeywords:
   - _IS_ANGELRING_OFF
   m_LightmapFlags: 4
@@ -38,9 +37,12 @@ Material:
     m_Floats:
     - _1st_ShadeColor_Feather: 0.145
     - _BaseShade_Feather: 0.145
+    - _OUTLINE: 0
+    - _RimLight_Power: 0.067
     m_Colors:
     - _1st_ShadeColor: {r: 0.94509804, g: 0.85882354, b: 0.9256109, a: 1}
     - _2nd_ShadeColor: {r: 0.7264151, g: 0.68872374, b: 0.7210056, a: 1}
+    - _RimLightColor: {r: 0.2830189, g: 0.2657796, b: 0.20692419, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &5731694137993871308

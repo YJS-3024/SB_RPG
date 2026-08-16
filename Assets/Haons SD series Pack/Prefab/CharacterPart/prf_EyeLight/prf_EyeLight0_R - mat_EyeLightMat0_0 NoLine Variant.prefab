@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &303512605276942134
+--- !u!1001 &6179207483364766447
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: prf_EyeLight0_R - mat_EyeLightMat0_0 NoLine Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8306866830734935307, guid: 432d4acce6350844ea766037a5e12e32, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a3ff9dc01747c0f4a8746af384b6d030, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

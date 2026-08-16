@@ -12,14 +12,17 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - UTS_RP_BUILTIN
   - _DISABLE_OUTLINE
   - _EMISSIVE_SIMPLE
   - _IS_CLIPPING_MODE
   - _IS_OUTLINE_CLIPPING_YES
-  - _OUTLINE_POS
+  - _OUTLINE_NML
   m_InvalidKeywords:
   - _IS_ANGELRING_OFF
+  - _IS_FILTER_LIGHTCOLOR_ON
+  - _IS_LIGHTCOLOR_1ST_SHADE_ON
+  - _IS_LIGHTCOLOR_2ND_SHADE_ON
+  - _IS_LIGHTCOLOR_BASE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -241,11 +244,11 @@ Material:
     m_Ints:
     - _ToonMaterialVersion: 0
     m_Floats:
-    - _1st2nd_Shades_Feather: 0.264
-    - _1st_ShadeColor_Feather: 0.181
+    - _1st2nd_Shades_Feather: 0.236
+    - _1st_ShadeColor_Feather: 0.171
     - _1st_ShadeColor_Step: 0.74
-    - _2nd_ShadeColor_Feather: 0.264
-    - _2nd_ShadeColor_Step: 0.314
+    - _2nd_ShadeColor_Feather: 0.236
+    - _2nd_ShadeColor_Step: 0.24
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ARSampler_AlphaOn: 0
@@ -275,7 +278,7 @@ Material:
     - _BaseColorOverridden: 0
     - _BaseColorVisible: 1
     - _BaseColor_Step: 0.74
-    - _BaseShade_Feather: 0.181
+    - _BaseShade_Feather: 0.171
     - _Base_Speed: 0
     - _Blend: 0
     - _BlendMode: 0
@@ -368,7 +371,7 @@ Material:
     - _Is_BlendBaseColor: 1
     - _Is_ColorShift: 0
     - _Is_Filter_HiCutPointLightColor: 1
-    - _Is_Filter_LightColor: 0
+    - _Is_Filter_LightColor: 1
     - _Is_LightColor_1st_Shade: 1
     - _Is_LightColor_2nd_Shade: 1
     - _Is_LightColor_AR: 1
@@ -399,7 +402,7 @@ Material:
     - _Nearest_Distance: 3
     - _NormalMapSpace: 0
     - _NormalScale: 1
-    - _OUTLINE: 1
+    - _OUTLINE: 0
     - _ObjectSpaceUVMapping: 0
     - _OcclusionStrength: 1
     - _Offset_X_Axis_BLD: -0.05
@@ -423,7 +426,7 @@ Material:
     - _RimLightVisible: 1
     - _RimLight_FeatherOff: 0
     - _RimLight_InsideMask: 0.591
-    - _RimLight_Power: 0.248
+    - _RimLight_Power: 0.067
     - _Rotate_EmissiveUV: 0
     - _Rotate_MatCapUV: 0
     - _Rotate_NormalMapForMatCapUV: 0
@@ -435,7 +438,7 @@ Material:
     - _SecondShadeOverridden: 0
     - _SecondShadeVisible: 1
     - _Set_SystemShadowsToBase: 1
-    - _ShadeColor_Step: 0.314
+    - _ShadeColor_Step: 0.24
     - _Smoothness: 0.5
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
@@ -460,7 +463,7 @@ Material:
     - _StencilWriteMaskDistortionVec: 64
     - _StencilWriteMaskGBuffer: 3
     - _StencilWriteMaskMV: 128
-    - _StepOffset: 0
+    - _StepOffset: 0.74
     - _SubsurfaceMask: 1
     - _SupportDecals: 1
     - _Surface: 0
@@ -537,7 +540,7 @@ Material:
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineMaskColor: {r: 0, g: 0, b: 0, a: 1}
     - _Outline_Color: {r: 0.4716981, g: 0.4716981, b: 0.4716981, a: 1}
-    - _RimLightColor: {r: 0.7735849, g: 0.6688256, b: 0.6458704, a: 1}
+    - _RimLightColor: {r: 0.2830189, g: 0.2657796, b: 0.20692419, a: 1}
     - _RimLightMaskColor: {r: 1, g: 0, b: 1, a: 1}
     - _SecondShadeMaskColor: {r: 0, g: 0, b: 1, a: 1}
     - _SpecColor: {r: 0.1999999, g: 0.1999999, b: 0.1999999, a: 1}
