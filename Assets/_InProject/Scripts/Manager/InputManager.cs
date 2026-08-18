@@ -3,12 +3,16 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using yjs.DevKit;
 
+/// <summary>
+/// Input Actions 생성, 활성화, 폐기 책임
+/// </summary>
 public class InputManager : MonoSingleton<InputManager>
 {
     private InputActions_RPG_SandBox bindingInput;
 
     public InputAction MoveAction => bindingInput.Gameplay.Move;
     public InputAction JumpAction => bindingInput.Gameplay.Jump;
+    public InputAction AttackAction => bindingInput.Gameplay.Attack;
 
     //  TODO :: PlayerInputReader 책임으로 옮길것
     private bool _isMoveDir = false;
