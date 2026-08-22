@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using yjs.DevKit;
 
 //  UnitManager는 유닛 생성 결과를 등록하고 찾아주는 역할만 맡기면 됩니다.
 //   작업 순서:
@@ -21,24 +22,35 @@ using UnityEngine;
 //   여기에는 HP, 이동, Input, FSM, 전투 로직을 넣지 마세요. 그건 Unit의 하위
 //   컴포넌트/각 시스템 책임입니다.
 
-public class UnitManager : MonoBehaviour
+public class UnitManager : MonoSingleton<UnitManager>
 {
     private UnitDefinition _unitDefinition;
-    private List<PlayerUnit> _playerUnits = new List<PlayerUnit>();
+    private UnitLoader _unitLoader;
+    private Dictionary<int, UnitBase> _units = new Dictionary<int, UnitBase>();
 
-    private void Awake()
+    public override bool Initialize()
     {
-
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
+        return true;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Destroy()
     {
+        var et = _units.GetEnumerator();
+        while (et.MoveNext())
+        {
+            var curUnit = et.Current.Value;
+            if (curUnit != null)
+            {
+                Destroy(curUnit.gameObject);
+            }
+        }
 
+        _units.Clear();
+    }
+
+    public bool RegistCreateUnit()
+    {
+        // var u = new UnitBase();
+        return true;
     }
 }

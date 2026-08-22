@@ -2,15 +2,10 @@ using UnityEngine;
 
 public class UnitRuntimeRoot : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private string _bonePath = string.Empty;
+
+    public void Create()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        
     }
 }
