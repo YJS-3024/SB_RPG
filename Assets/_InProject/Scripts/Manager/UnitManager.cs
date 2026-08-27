@@ -25,11 +25,12 @@ using yjs.DevKit;
 public class UnitManager : MonoSingleton<UnitManager>
 {
     private UnitDefinition _unitDefinition;
-    private UnitLoader _unitLoader;
+    private UnitLoader _unitLoader = new UnitLoader();
     private Dictionary<int, UnitBase> _units = new Dictionary<int, UnitBase>();
 
     public override bool Initialize()
     {
+        _unitLoader.CreateUnit();
         return true;
     }
 
