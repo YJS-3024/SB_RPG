@@ -1,14 +1,7 @@
 fileFormatVersion: 2
 guid: ecc3cca4ac30ded4c8cb6e7931f641dd
-AssetOrigin:
-  serializedVersion: 1
-  productId: 181364
-  packageName: Official School Uniform - Haon SD series
-  packageVersion: 2026.8
-  assetPath: Assets/Haons SD series Pack/Mesh/CharacterParts/mesh_Costume0.fbx
-  uploadId: 972574
 ModelImporter:
-  serializedVersion: 24501
+  serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects:
   - first:
@@ -26,7 +19,6 @@ ModelImporter:
     materialName: 0
     materialSearch: 1
     materialLocation: 1
-    searchTexturesGlobally: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -77,8 +69,6 @@ ModelImporter:
     generateMeshLods: 0
     meshLodGenerationFlags: 0
     maximumMeshLod: -1
-    importUVs: -1
-    importVertexColors: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -98,7 +88,6 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-    calculateBlendshapeNormalsDeltaFromImportedNormals: 1
   referencedClips: []
   importAnimation: 1
   humanDescription:
@@ -509,7 +498,8 @@ ModelImporter:
     - name: Eye_00_R_Cover
       parentName: Eye_00_R
       position: {x: 0.0000000011920929, y: 0, z: 0}
-      rotation: {x: -0.00000071525557, y: 0.00000023841883, z: -0.00000030852954, w: 1}
+      rotation: {x: -0.00000071525557, y: 0.00000023841883, z: -0.00000030852954,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Eye_L
       parentName: Head
@@ -574,7 +564,8 @@ ModelImporter:
     - name: Prop_L
       parentName: Hand_L
       position: {x: -0.000000019073486, y: -0.000000038146972, z: 0.000000009536743}
-      rotation: {x: -0.000000050291423, y: -0.000000016763803, z: -0.000000059604645, w: 1}
+      rotation: {x: -0.000000050291423, y: -0.000000016763803, z: -0.000000059604645,
+        w: 1}
       scale: {x: 1, y: 1, z: 0.9999999}
     - name: Finger_L_Ring_Proximal
       parentName: Hand_L
@@ -669,7 +660,8 @@ ModelImporter:
     - name: Prop_R
       parentName: Hand_R
       position: {x: 0.000000019073486, y: -0.000000038146972, z: 0}
-      rotation: {x: -0.00000009965152, y: -0.000000036321563, z: -0.00000010430811, w: 1}
+      rotation: {x: -0.00000009965152, y: -0.000000036321563, z: -0.00000010430811,
+        w: 1}
       scale: {x: 1.0000002, y: 1, z: 1.0000001}
     - name: Finger_R_Ring_Proximal
       parentName: Hand_R
@@ -823,7 +815,8 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 41950de12c96f384998c9021c2cd0061, type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 41950de12c96f384998c9021c2cd0061,
+    type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
@@ -835,3 +828,10 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 181364
+  packageName: Official School Uniform - Haon SD series
+  packageVersion: 2026.8
+  assetPath: Assets/Haons SD series Pack/Mesh/CharacterParts/mesh_Costume0.fbx
+  uploadId: 972574
