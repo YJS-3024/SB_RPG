@@ -1,0 +1,4 @@
+using UnityEditor;using UnityEngine;
+public static class CopyBunnyImportSettings{
+[MenuItem("Tools/Character/Copy BunnyGirl FBX Import Settings")]
+static void Run(){var src=AssetImporter.GetAtPath("Assets/See1/SD Chanz Costume Series/BunnyGirl/Models/body_bunnygirl.FBX") as ModelImporter;var dst=AssetImporter.GetAtPath("Assets/_InProject/Resources/CharacterParts/body_BunnyGirl_BaseRig.fbx") as ModelImporter;if(src==null||dst==null){Debug.LogError("Model importer not found");return;}dst.globalScale=src.globalScale;dst.useFileScale=src.useFileScale;dst.bakeAxisConversion=src.bakeAxisConversion;dst.SaveAndReimport();Debug.Log("Copied FBX import scale: "+src.globalScale+" useFileScale="+src.useFileScale);}}
