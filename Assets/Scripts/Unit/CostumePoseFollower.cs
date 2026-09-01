@@ -1,9 +1,17 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public sealed class BunnyGirlPoseFollower : MonoBehaviour
+/// <summary>
+/// Copies an animated base-rig pose to a costume part that has its own skeleton.
+/// Supports same-name bones and the Character1_* costume skeleton used by the existing parts.
+/// </summary>
+public sealed class CostumeSetting : MonoBehaviour
 {
     [SerializeField] private Transform sourceRoot;
+    [SerializeField] private SkinnedMeshRenderer skinMeshRender;
+    [SerializeField] private Material[] skinMaterials;
+    [SerializeField] private bool copyRootPosition = true;
 
     private readonly Dictionary<Transform, Quaternion> sourceStart = new();
     private readonly Dictionary<Transform, Quaternion> targetStart = new();
@@ -12,7 +20,7 @@ public sealed class BunnyGirlPoseFollower : MonoBehaviour
     private Vector3 targetRootStart;
     private bool ready;
 
-    private static readonly (string source, string target)[] BoneMap =
+    private static readonly (string source, string target)[] Character1Map =
     {
         ("Hips", "Character1_Hips"), ("Spine", "Character1_Spine"), ("Chest", "Character1_Spine1"),
         ("Upper_Chest", "Character1_Spine2"), ("Neck", "Character1_Neck"), ("Head", "Character1_Head"),
@@ -25,43 +33,63 @@ public sealed class BunnyGirlPoseFollower : MonoBehaviour
     };
 
     private void Start() => Cache();
-private void Update() => ApplyPose();
+    private void Update() => ApplyPose();
     private void LateUpdate() => ApplyPose();
+
+    public void RebuildBindings()
+    {
+        ready = false;
+        Cache();
+    }
+
     private void ApplyPose()
     {
         if (!ready) Cache();
         if (!ready) return;
+
         foreach (var binding in bindings)
         {
             var delta = binding.source.rotation * Quaternion.Inverse(sourceStart[binding.source]);
             binding.target.rotation = delta * targetStart[binding.target];
         }
-        transform.position = targetRootStart + (sourceRoot.position - sourceRootStart);
+
+        if (copyRootPosition)
+            transform.position = targetRootStart + (sourceRoot.position - sourceRootStart);
     }
 
-private void Cache()
+    private void Cache()
     {
-        if (sourceRoot == null && transform.parent != null)
+        if (sourceRoot == null)
         {
-            var parentAnimator = transform.parent.GetComponentInParent<Animator>();
-            if (parentAnimator != null) sourceRoot = parentAnimator.transform;
+            var animator = GetComponentInParent<Animator>();
+            if (animator != null) sourceRoot = animator.transform;
         }
         if (sourceRoot == null) return;
+
         bindings.Clear();
         sourceStart.Clear();
         targetStart.Clear();
-        foreach (var pair in BoneMap)
-        {
-            var source = FindDeep(sourceRoot, pair.source);
-            var target = FindDeep(transform, pair.target);
-            if (source == null || target == null) continue;
-            bindings.Add((source, target));
-            sourceStart[source] = source.rotation;
-            targetStart[target] = target.rotation;
-        }
+
+        foreach (var pair in Character1Map)
+            AddBinding(pair.source, pair.target);
+
+        foreach (var source in sourceRoot.GetComponentsInChildren<Transform>(true))
+            AddBinding(source.name, source.name);
+
         sourceRootStart = sourceRoot.position;
         targetRootStart = transform.position;
         ready = bindings.Count > 0;
+    }
+
+    private void AddBinding(string sourceName, string targetName)
+    {
+        var source = FindDeep(sourceRoot, sourceName);
+        var target = FindDeep(transform, targetName);
+        if (source == null || target == null || sourceStart.ContainsKey(source)) return;
+
+        bindings.Add((source, target));
+        sourceStart[source] = source.rotation;
+        targetStart[target] = target.rotation;
     }
 
     private static Transform FindDeep(Transform root, string name)
@@ -69,5 +97,26 @@ private void Cache()
         foreach (var item in root.GetComponentsInChildren<Transform>(true))
             if (item.name == name) return item;
         return null;
+    }
+
+    public void SetRootBone(Transform tf)
+    {
+        sourceRoot = tf;
+        RebuildBindings();
+    }
+
+    public void SetSkinMaterial(int index)
+    {
+        if (skinMeshRender == null)
+            return;
+
+        if (skinMaterials.Length < index)
+        {
+            skinMeshRender.material = skinMaterials.FirstOrDefault();
+        }
+        else
+        {
+            skinMeshRender.material = skinMaterials[index];
+        }
     }
 }

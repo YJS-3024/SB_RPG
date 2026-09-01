@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerUnit : UnitBase
 {
-    private const string BaseBodyPath = "CharacterParts/body_Base";
+    private const string BaseBodyPath = "BaseRig";
     private const string AnimatorPath = "Anim/SD_AnimController";
 
     private const string CostumePath = "CharacterParts/body_BunnyGirl";
@@ -28,25 +28,32 @@ public class PlayerUnit : UnitBase
     {
         DestroyUnit();
 
-        var body = Resources.Load<GameObject>(CostumePath);
+        var body = Resources.Load<GameObject>(BaseBodyPath);
         if (body == null)
         {
-            Debug.LogError($"PlayerUnit: 공용 골격을 찾을 수 없습니다. Resources/{CostumePath}", this);
+            Debug.LogError($"PlayerUnit: 공용 골격을 찾을 수 없습니다. Resources/{BaseBodyPath}", this);
             return;
         }
 
         var goBody = Instantiate(body, transform);
         goBody.name = $"Body_{0}";
-
-        // var costume = Resources.Load<GameObject>(SkeletonPath);
-        
+ 
         root = goBody.transform.FindChildCheck(x => x.name == "Root");
         hips = root.FindChildCheck(x => x.name.Contains("Hips"));
+
+        var costume = Resources.Load<CostumeSetting>(CostumePath);
+        if (costume != null)
+        {
+            costume = Instantiate(costume, goBody.transform);
+            costume.SetRootBone(root);
+            costume.SetSkinMaterial(2);
+        }
 
         if (animator == null)
         {
             animator = goBody.GetComponent<Animator>();
             animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(AnimatorPath);
+            animator.Play("Idle");
         }
 
         _createdObjects.Add(goBody);
