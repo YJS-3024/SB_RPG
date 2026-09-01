@@ -26,8 +26,6 @@ public class PlayerUnit : UnitBase
 
     public override void CreateUnit()
     {
-        DestroyUnit();
-
         var body = Resources.Load<GameObject>(BaseBodyPath);
         if (body == null)
         {
@@ -37,7 +35,15 @@ public class PlayerUnit : UnitBase
 
         var goBody = Instantiate(body, transform);
         goBody.name = $"Body_{0}";
+        goBody.SetActive(false);
  
+        if (animator == null)
+        {
+            animator = goBody.GetComponent<Animator>();
+            animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(AnimatorPath);
+            animator.ApplyBuiltinRootMotion();
+        }
+
         root = goBody.transform.FindChildCheck(x => x.name == "Root");
         hips = root.FindChildCheck(x => x.name.Contains("Hips"));
 
@@ -49,12 +55,7 @@ public class PlayerUnit : UnitBase
             costume.SetSkinMaterial(2);
         }
 
-        if (animator == null)
-        {
-            animator = goBody.GetComponent<Animator>();
-            animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(AnimatorPath);
-            animator.Play("Idle");
-        }
+        goBody.SetActive(true);
 
         _createdObjects.Add(goBody);
     }
