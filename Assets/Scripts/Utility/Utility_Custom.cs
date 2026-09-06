@@ -19,10 +19,27 @@ namespace DevelopKit
             return null;
         }
 
+        public static void SetParents(this MonoBehaviour target, Transform parentTf)
+        {
+            if (target == null || parentTf == null)
+                return;
+
+            target.transform.SetParent(parentTf);
+            target.transform.localPosition = Vector3.zero;
+            target.transform.localRotation = Quaternion.identity;
+            target.transform.localScale = Vector3.one;
+        }
+
         public static void SetActive(this MonoBehaviour mono, bool isActive)
         {
             if (mono != null)
                 mono.SetActive(isActive);
+        }
+
+        public static void SetActive(this Component component, bool isActive)
+        {
+            if (component != null)
+                component.SetActive(isActive);
         }
 
         public static void ResistCoroutine(this MonoBehaviour mono, IEnumerator onCallback, ref Coroutine coroutine)
