@@ -30,10 +30,15 @@ public class PlayerUnit : UnitBase
     public UnitSkinParts headAccSkin;
     public UnitHairParts hairSkin_front;
     public UnitHairParts hairSkin_base;
+
+    [SerializeField] private float headForwardOffset = 0.05f;
     
 
     private readonly List<GameObject> _createdObjects = new();
     private readonly Dictionary<string, Transform> _bonesByName = new();
+    private Vector3 _headBaseLocalPosition;
+    private Vector3 _headForwardLocalOffset;
+    private bool _headOffsetReady;
 
     private void Start()
     {
@@ -54,7 +59,21 @@ public class PlayerUnit : UnitBase
         eyeMeshs_R.SetRender(rootEyeR);
         hairSkin_front.SetHair(rootHead);
         hairSkin_base.SetHair(rootHead);
+
+        _headBaseLocalPosition = rootHead.localPosition;
+        _headForwardLocalOffset = rootHead.parent.InverseTransformVector(
+            animator.transform.forward * headForwardOffset);
+        _headOffsetReady = true;
     }
+
+    private void LateUpdate()
+    {
+        if (!_headOffsetReady || rootHead == null)
+            return;
+
+        rootHead.localPosition = _headBaseLocalPosition + _headForwardLocalOffset;
+    }
+
 
     public override void DestroyUnit()
     {
