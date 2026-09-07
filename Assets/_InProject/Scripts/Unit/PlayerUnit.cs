@@ -31,7 +31,7 @@ public class PlayerUnit : UnitBase
     public UnitHairParts hairSkin_front;
     public UnitHairParts hairSkin_base;
 
-    [SerializeField] private float headForwardOffset = 0.05f;
+    private const float HeadForwardOffset = 0.07f;
     
 
     private readonly List<GameObject> _createdObjects = new();
@@ -62,7 +62,7 @@ public class PlayerUnit : UnitBase
 
         _headBaseLocalPosition = rootHead.localPosition;
         _headForwardLocalOffset = rootHead.parent.InverseTransformVector(
-            animator.transform.forward * headForwardOffset);
+            animator.transform.forward * HeadForwardOffset);
         _headOffsetReady = true;
     }
 
