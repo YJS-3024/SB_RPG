@@ -52,7 +52,7 @@ public class PlayerUnit : UnitBase
         animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
 
         bodySkin.SetBones(rootBone,parentsTf: animator.transform);
-        headAccSkin.SetBones(rootHead, parentsTf: rootHead);
+        headAccSkin.SetBones(rootHead, parentsTf: rootBone);
 
         faceSkin.SetBones(rootHead, parentsTf: rootHead);
         eyeMeshs_L.SetRender(rootEyeL);

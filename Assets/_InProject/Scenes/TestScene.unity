@@ -422,7 +422,7 @@ PrefabInstance:
       objectReference: {fileID: 2179741910236754141}
     - target: {fileID: 4128897881547010463, guid: 89ee7e3f7bca341bb970356f9b66b78d, type: 3}
       propertyPath: m_Name
-      value: accessory_BunnyGril
+      value: head_acc_BunnyGirl
       objectReference: {fileID: 0}
     - target: {fileID: 4128897881547010463, guid: 89ee7e3f7bca341bb970356f9b66b78d, type: 3}
       propertyPath: m_IsActive
@@ -457,6 +457,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1227759562}
     m_Modifications:
+    - target: {fileID: 705734890083064416, guid: c22b871ec2c564e7b8de3b965d4dd505, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 705734890083064416, guid: c22b871ec2c564e7b8de3b965d4dd505, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1678358060412211568, guid: c22b871ec2c564e7b8de3b965d4dd505, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -497,21 +505,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2452195887706665590, guid: c22b871ec2c564e7b8de3b965d4dd505, type: 3}
+    - target: {fileID: 4141329456176153761, guid: c22b871ec2c564e7b8de3b965d4dd505, type: 3}
       propertyPath: m_Name
       value: body_BunnyGirl
       objectReference: {fileID: 0}
     - target: {fileID: 4141329456176153761, guid: c22b871ec2c564e7b8de3b965d4dd505, type: 3}
-      propertyPath: m_Name
-      value: costume_BunnyGirl
-      objectReference: {fileID: 0}
-    - target: {fileID: 4917945295720866461, guid: c22b871ec2c564e7b8de3b965d4dd505, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8192627353822235607, guid: c22b871ec2c564e7b8de3b965d4dd505, type: 3}
-      propertyPath: m_RootBone
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -996,6 +996,15 @@ PrefabInstance:
     - target: {fileID: 6598516519650036023, guid: 532f67865bb66bd4d9a5a16972249933, type: 3}
       propertyPath: m_Name
       value: BaseRig
+      objectReference: {fileID: 0}
+    - target: {fileID: 7939554097291385505, guid: 532f67865bb66bd4d9a5a16972249933, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'Jaw'\n\tTransform 'Toes_L'\n\tTransform
+        'Toes_R'\n\tTransform 'Eye_R'\n\tTransform 'Toes_L'\n\tTransform 'Toes_R'\n\tTransform
+        'Eye_L'\n\tTransform 'Eye_R'\n\tTransform 'Jaw'\n\tTransform 'Eye_L'\n\tand
+        more ...\n\tFrom animation clip 'StandB@Loop'"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
