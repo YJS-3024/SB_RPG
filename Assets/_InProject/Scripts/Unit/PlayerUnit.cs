@@ -31,7 +31,7 @@ public class PlayerUnit : UnitBase
     public UnitHairParts hairSkin_front;
     public UnitHairParts hairSkin_base;
 
-    private const float HeadForwardOffset = 0.055f;
+    private const float HeadForwardOffset = 0.05f;
     
 
     private readonly List<GameObject> _createdObjects = new();
