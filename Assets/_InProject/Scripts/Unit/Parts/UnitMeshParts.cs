@@ -3,14 +3,13 @@ using System.Linq;
 using DevelopKit;
 using UnityEngine;
 
-public class UnitMeshParts : MonoBehaviour
+public class UnitMeshParts : BaseParts
 {
     [SerializeField] private MeshRenderer[] meshRenderParts;
     public Material[] matVariations;
 
     public void SetRender(Transform parents, int index = 0)
     {
-        this.SetParents(parents);
 
         if (meshRenderParts.Length == 0 || matVariations.Length == 0)
             return;
@@ -21,4 +20,10 @@ public class UnitMeshParts : MonoBehaviour
         meshRenderParts[index].gameObject.SetActive(true);
         meshRenderParts[index].material = matVariations[index];
     }
+
+    public override bool IsValidIndex(int index)
+    {
+        return index < matVariations.Length;
+    }
+
 }

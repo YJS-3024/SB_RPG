@@ -1,19 +1,39 @@
 using System.Collections.Generic;
-using System.Linq;
-using DevelopKit;
-using Mono.Cecil;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
+
+public enum eUnitParts
+{
+    None = 0,
+
+    Body = 1,
+    RootBone,
+    BodyCostume,
+    
+    Head = 11,
+    Face,
+    FaceEyeL,
+    FaceEyeR,
+    Hair_Front,
+    Hair_Back,
+
+    Max,
+}
 
 /// <summary>
 /// 공용 골격에 캐릭터 파츠를 결합하고 파츠의 Animator를 비활성화한다.
 /// </summary>
 public class PlayerUnit : UnitBase
 {
-    private const string BaseBodyPath = "BaseRig";
-
-    private const string CostumePath = "CharacterParts/body_BunnyGirl";
-    private const string FacePath = "CharacterParts/Mesh_Face_00";
+    private List<KeyValuePair<eUnitParts, string>> PartsPathList = new()
+    {
+        new KeyValuePair<eUnitParts, string>(eUnitParts.RootBone, "BaseRig"),
+        new KeyValuePair<eUnitParts, string>(eUnitParts.BodyCostume, "CharacterParts/body_BunnyGirl"),
+        new KeyValuePair<eUnitParts, string>(eUnitParts.Face, "CharacterParts/face_Skin"),
+        new KeyValuePair<eUnitParts, string>(eUnitParts.FaceEyeL, "CharacterParts/face_Eye_L"),
+        new KeyValuePair<eUnitParts, string>(eUnitParts.FaceEyeR, "CharacterParts/face_Eye_R"),
+        new KeyValuePair<eUnitParts, string>(eUnitParts.Hair_Front, "CharacterParts/hair_front"),
+        new KeyValuePair<eUnitParts, string>(eUnitParts.Hair_Back, "CharacterParts/hair_back")
+    };
 
     public Animator animator;
     public Transform rootBone;
@@ -30,11 +50,6 @@ public class PlayerUnit : UnitBase
     public UnitSkinParts headAccSkin;
     public UnitHairParts hairSkin_front;
     public UnitHairParts hairSkin_base;
-
-    
-
-    private readonly List<GameObject> _createdObjects = new();
-    private readonly Dictionary<string, Transform> _bonesByName = new();
 
     private void Start()
     {

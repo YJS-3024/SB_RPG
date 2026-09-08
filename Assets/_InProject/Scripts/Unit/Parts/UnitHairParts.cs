@@ -11,14 +11,18 @@ public struct MultiHairParts
     public Material[] subMaterials;
 }
 
-public class UnitHairParts : MonoBehaviour
+public class UnitHairParts : BaseParts
 {
-    public MultiHairParts[] multiHairParts; 
+    public MultiHairParts[] multiHairParts;
+
+    public override bool IsValidIndex(int index)
+    {
+        return index < multiHairParts.Length;
+    }
 
     public void SetHair(Transform parentsTf, int index = 0)
     {
-        if (parentsTf != null)
-            this.SetParents(parentsTf);
+        AttachTo(parentsTf);
 
         if (multiHairParts == null || multiHairParts.Length == 0)
             return;
