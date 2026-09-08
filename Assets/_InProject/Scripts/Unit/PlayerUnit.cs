@@ -31,14 +31,10 @@ public class PlayerUnit : UnitBase
     public UnitHairParts hairSkin_front;
     public UnitHairParts hairSkin_base;
 
-    private const float HeadForwardOffset = 0.043f;
     
 
     private readonly List<GameObject> _createdObjects = new();
     private readonly Dictionary<string, Transform> _bonesByName = new();
-    private Vector3 _headBaseLocalPosition;
-    private Vector3 _headForwardLocalOffset;
-    private bool _headOffsetReady;
 
     private void Start()
     {
@@ -60,18 +56,6 @@ public class PlayerUnit : UnitBase
         hairSkin_front.SetHair(rootHead);
         hairSkin_base.SetHair(rootHead);
 
-        _headBaseLocalPosition = rootHead.localPosition;
-        _headForwardLocalOffset = rootHead.parent.InverseTransformVector(
-            animator.transform.forward * HeadForwardOffset);
-        _headOffsetReady = true;
-    }
-
-    private void LateUpdate()
-    {
-        if (!_headOffsetReady || rootHead == null)
-            return;
-
-        rootHead.localPosition = _headBaseLocalPosition + _headForwardLocalOffset;
     }
 
 
