@@ -10,6 +10,7 @@ public class UnitMeshParts : BaseParts
 
     public void SetRender(Transform parents, int index = 0)
     {
+        this.SetParents(parents);
 
         if (meshRenderParts.Length == 0 || matVariations.Length == 0)
             return;
