@@ -3,11 +3,34 @@ using DevelopKit;
 using UnityEngine;
 
 /// <summary>
+/// 게임에서 관리하는 리소스의 종류입니다.
+/// </summary>
+public enum eResourceType
+{
+    None = 0,
+    Prefab_Unit_Costume,
+    Prefab_Unit_Accessory,
+    Prefab_Unit_Skin,
+    Prefab_UI,
+    Sprite,
+    Texture,
+    Max
+}
+
+/// <summary>
 /// Resources 에셋 로드와 캐시를 관리합니다.
 /// </summary>
 public class ResourceManager : MonoSingleton<ResourceManager>
 {
     private readonly Dictionary<string, Object> _cache = new();
+
+    private readonly List<KeyValuePair<eResourceType, string>> _dicResourcePaths = new List<KeyValuePair<eResourceType, string>>
+    {
+        new KeyValuePair<eResourceType, string>(eResourceType.Prefab_Unit_Costume, "Prefabs/CharacterParts/Costume/"),
+        new KeyValuePair<eResourceType, string>(eResourceType.Prefab_Unit_Accessory, "Prefabs/CharacterParts/Accessory/"),
+        new KeyValuePair<eResourceType, string>(eResourceType.Prefab_Unit_Skin, "Prefabs/CharacterParts/Skin/"),
+        new KeyValuePair<eResourceType, string>(eResourceType.Prefab_UI, "Prefabs/UI/")
+    };
 
     public override bool Initialize()
     {
