@@ -317,7 +317,7 @@ public partial class @InputActions_RPG_SandBox: IInputActionCollection2, IDispos
                 {
                     ""name"": """",
                     ""id"": ""0c0527da-6891-4550-b41d-6bfe6cb72e02"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -339,7 +339,7 @@ public partial class @InputActions_RPG_SandBox: IInputActionCollection2, IDispos
                 {
                     ""name"": """",
                     ""id"": ""1cbbdafb-e34b-4977-bf6a-bab4ef4821c6"",
-                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",

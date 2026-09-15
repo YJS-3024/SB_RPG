@@ -11,6 +11,8 @@ public class PlayerUnitMovement : MonoBehaviour
     [SerializeField] private float rotationSpeed = 12f;
     [SerializeField] private float jumpSpeed = 5f;
     [SerializeField] private float gravity = 15f;
+    [SerializeField] private float fallGravityMultiplier = 1.6f;
+    [SerializeField] private float maxFallSpeed = 12f;
     [SerializeField] private float animationDampTime = 0.1f;
 
     private InputReader_Player _inputReader;
@@ -80,7 +82,9 @@ public class PlayerUnitMovement : MonoBehaviour
         if (_isGrounded)
             return;
 
-        _verticalSpeed -= gravity * Time.deltaTime;
+        float gravityMultiplier = _verticalSpeed < 0f ? fallGravityMultiplier : 1f;
+        _verticalSpeed -= gravity * gravityMultiplier * Time.deltaTime;
+        _verticalSpeed = Mathf.Max(_verticalSpeed, -maxFallSpeed);
         transform.position += Vector3.up * (_verticalSpeed * Time.deltaTime);
 
         if (transform.position.y > _groundHeight || _verticalSpeed > 0f)

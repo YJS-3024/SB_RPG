@@ -85,7 +85,8 @@ public static class TestSceneConfigurator
         cameraObject.tag = "MainCamera";
         Camera camera = cameraObject.AddComponent<Camera>();
         cameraObject.AddComponent<AudioListener>();
-        cameraObject.transform.position = new Vector3(0f, 6f, -8f);
+        cameraObject.AddComponent<TopDownCameraFollow>();
+        cameraObject.transform.position = new Vector3(0f, 8f, -6f);
         cameraObject.transform.LookAt(new Vector3(0f, 1f, 0f));
         camera.clearFlags = CameraClearFlags.Skybox;
     }

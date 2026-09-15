@@ -15,36 +15,57 @@ public class InputReader_Player : MonoBehaviour
     public event Action Attack;
 
     private bool _isMoving = false;
+    private InputAction _moveAction;
+    private InputAction _jumpAction;
+    private InputAction _dodgeAction;
+    private InputAction _attackAction;
 
     private void OnEnable()
     {
         InputManager.Instance.Initialize();
-        InputManager.Instance.MoveAction.performed += OnMove;
-        InputManager.Instance.MoveAction.canceled += OnMove;
+        _moveAction = InputManager.Instance.MoveAction;
+        _jumpAction = InputManager.Instance.JumpAction;
+        _dodgeAction = InputManager.Instance.DodgeAction;
+        _attackAction = InputManager.Instance.AttackAction;
 
-        InputManager.Instance.JumpAction.performed += OnJump;
-        InputManager.Instance.DodgeAction.performed += OnDodge;
+        _moveAction.performed += OnMove;
+        _moveAction.canceled += OnMove;
 
-        InputManager.Instance.AttackAction.started += OnAttack;
-        InputManager.Instance.AttackAction.performed += OnAttack;
-        InputManager.Instance.AttackAction.canceled += OnAttack;
+        _jumpAction.performed += OnJump;
+        _dodgeAction.performed += OnDodge;
+
+        _attackAction.started += OnAttack;
+        _attackAction.performed += OnAttack;
+        _attackAction.canceled += OnAttack;
     }
 
     private void OnDisable()
     {
-        InputManager.Instance.MoveAction.performed -= OnMove;
-        InputManager.Instance.MoveAction.canceled -= OnMove;
+        if (_moveAction != null)
+        {
+            _moveAction.performed -= OnMove;
+            _moveAction.canceled -= OnMove;
+        }
 
-        InputManager.Instance.JumpAction.performed -= OnJump;
-        InputManager.Instance.DodgeAction.performed -= OnDodge;
+        if (_jumpAction != null)
+            _jumpAction.performed -= OnJump;
 
-        InputManager.Instance.AttackAction.started -= OnAttack;
-        InputManager.Instance.AttackAction.performed -= OnAttack;
-        InputManager.Instance.AttackAction.canceled -= OnAttack;
+        if (_dodgeAction != null)
+            _dodgeAction.performed -= OnDodge;
 
+        if (_attackAction != null)
+        {
+            _attackAction.started -= OnAttack;
+            _attackAction.performed -= OnAttack;
+            _attackAction.canceled -= OnAttack;
+        }
+
+        _moveAction = null;
+        _jumpAction = null;
+        _dodgeAction = null;
+        _attackAction = null;
         Move = Vector2.zero;
     }
-
     private void OnMove(InputAction.CallbackContext context)
     {
         Move = context.ReadValue<Vector2>();
