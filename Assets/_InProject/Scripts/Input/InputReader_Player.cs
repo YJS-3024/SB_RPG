@@ -11,6 +11,7 @@ public class InputReader_Player : MonoBehaviour
     public Vector2 Move { get; private set; }
 
     public event Action JumpPerformed;
+    public event Action DodgePerformed;
     public event Action Attack;
 
     private bool _isMoving = false;
@@ -22,6 +23,7 @@ public class InputReader_Player : MonoBehaviour
         InputManager.Instance.MoveAction.canceled += OnMove;
 
         InputManager.Instance.JumpAction.performed += OnJump;
+        InputManager.Instance.DodgeAction.performed += OnDodge;
 
         InputManager.Instance.AttackAction.started += OnAttack;
         InputManager.Instance.AttackAction.performed += OnAttack;
@@ -34,6 +36,7 @@ public class InputReader_Player : MonoBehaviour
         InputManager.Instance.MoveAction.canceled -= OnMove;
 
         InputManager.Instance.JumpAction.performed -= OnJump;
+        InputManager.Instance.DodgeAction.performed -= OnDodge;
 
         InputManager.Instance.AttackAction.started -= OnAttack;
         InputManager.Instance.AttackAction.performed -= OnAttack;
@@ -51,6 +54,11 @@ public class InputReader_Player : MonoBehaviour
     private void OnJump(InputAction.CallbackContext context)
     {
         JumpPerformed?.Invoke();
+    }
+
+    private void OnDodge(InputAction.CallbackContext context)
+    {
+        DodgePerformed?.Invoke();
     }
 
     private void OnAttack(InputAction.CallbackContext context)

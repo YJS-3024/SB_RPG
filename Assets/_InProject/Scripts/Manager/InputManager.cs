@@ -13,6 +13,7 @@ public class InputManager : MonoSingleton<InputManager>
     public InputAction MoveAction => bindingInput.Gameplay.Move;
     public InputAction JumpAction => bindingInput.Gameplay.Jump;
     public InputAction AttackAction => bindingInput.Gameplay.Attack;
+    public InputAction DodgeAction => bindingInput.Gameplay.Dodge;
 
     private bool _isMoveDir;
     private Vector2 _moveVector = Vector2.zero;
