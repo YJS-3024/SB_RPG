@@ -17,6 +17,7 @@ public class InputReader_Player : MonoBehaviour
 
     private void OnEnable()
     {
+        InputManager.Instance.Initialize();
         InputManager.Instance.MoveAction.performed += OnMove;
         InputManager.Instance.MoveAction.canceled += OnMove;
 

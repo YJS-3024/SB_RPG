@@ -1,4 +1,3 @@
-using System;
 using DevelopKit;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,52 +8,59 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoSingleton<InputManager>
 {
     private InputActions_RPG_SandBox bindingInput;
+    private bool _isInitialized;
 
     public InputAction MoveAction => bindingInput.Gameplay.Move;
     public InputAction JumpAction => bindingInput.Gameplay.Jump;
     public InputAction AttackAction => bindingInput.Gameplay.Attack;
 
-    //  TODO :: PlayerInputReader 책임으로 옮길것
-    private bool _isMoveDir = false;
+    private bool _isMoveDir;
     private Vector2 _moveVector = Vector2.zero;
 
     public override bool Initialize()
     {
+        if (_isInitialized)
+            return true;
+
         bindingInput = new InputActions_RPG_SandBox();
         bindingInput.Gameplay.Enable();
 
-        //  TODO :: PlayerInputReader 책임으로 옮길것
         MoveAction.started += OnMoveStart;
         MoveAction.canceled += OnMoveCancel;
         MoveAction.performed += OnMovePerformed;
 
+        _isInitialized = true;
         return true;
     }
 
     private void OnMoveStart(InputAction.CallbackContext context)
     {
         if (context.ReadValue<Vector2>() != Vector2.zero)
-        {
             _isMoveDir = true;
-        }
     }
-    
+
     private void OnMovePerformed(InputAction.CallbackContext context)
     {
         _moveVector = context.ReadValue<Vector2>();
     }
-    
+
     private void OnMoveCancel(InputAction.CallbackContext context)
     {
         _moveVector = Vector2.zero;
         _isMoveDir = false;
     }
 
-
-
-
     protected override void Destroy()
     {
-        bindingInput?.Dispose();
+        if (bindingInput != null)
+        {
+            MoveAction.started -= OnMoveStart;
+            MoveAction.canceled -= OnMoveCancel;
+            MoveAction.performed -= OnMovePerformed;
+            bindingInput.Dispose();
+        }
+
+        bindingInput = null;
+        _isInitialized = false;
     }
 }
