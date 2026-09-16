@@ -32,8 +32,10 @@ public class PlayerUnit : UnitBase
     private const string EyeRightName = "face_Eye_R";
     private const string HairFrontName = "hair_front";
     private const string HairBackName = "hair_back";
+    private const string GreatswordName = "prf_Prop_R_GreatSword1";
 
     private GameObject _rigInstance;
+    private Transform _rightHand;
     private bool _isCreated;
 
     public Animator animator;
@@ -85,6 +87,12 @@ public class PlayerUnit : UnitBase
             return;
         }
 
+        if (!LoadGreatsword())
+        {
+            DestroyUnit();
+            return;
+        }
+
         animator.transform.localPosition = Vector3.zero;
         animator.transform.localScale = Vector3.one;
         animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
@@ -105,6 +113,7 @@ public class PlayerUnit : UnitBase
             Destroy(_rigInstance);
 
         _rigInstance = null;
+        _rightHand = null;
         _isCreated = false;
     }
 
@@ -129,13 +138,28 @@ public class PlayerUnit : UnitBase
         rootHead = FindChild(_rigInstance.transform, "Head");
         rootEyeL = FindChild(_rigInstance.transform, "Eye_L");
         rootEyeR = FindChild(_rigInstance.transform, "Eye_R");
+        _rightHand = FindChild(_rigInstance.transform, "Hand_R");
 
-        if (animator != null && rootBone != null && rootHead != null && rootEyeL != null && rootEyeR != null)
+        if (animator != null && rootBone != null && rootHead != null && rootEyeL != null && rootEyeR != null && _rightHand != null)
             return true;
 
         RuntimeLog.Error("BaseRig is missing Animator or required bones.");
         DestroyUnit();
         return false;
+    }
+
+    private bool LoadGreatsword()
+    {
+        GameObject prefab = ResourceManager.Instance.LoadCached<GameObject>(
+            eResourceType.Prefab_Unit_Weapon, GreatswordName);
+        if (prefab == null)
+        {
+            RuntimeLog.Error("PlayerUnit greatsword load failed.");
+            return false;
+        }
+
+        Instantiate(prefab, _rightHand, false);
+        return true;
     }
 
     private T LoadPart<T>(eResourceType type, string assetName) where T : Component

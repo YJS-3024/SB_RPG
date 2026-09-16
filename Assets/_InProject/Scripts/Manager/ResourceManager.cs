@@ -27,6 +27,7 @@ public enum eResourceType
     Font,
     Text,
     Other,
+    Prefab_Unit_Weapon,
     Max
 }
 
@@ -42,6 +43,7 @@ public class ResourceManager : MonoSingleton<ResourceManager>
         { eResourceType.Prefab_Unit_Costume, "Prefabs/CharacterParts/Costume" },
         { eResourceType.Prefab_Unit_Accessory, "Prefabs/CharacterParts/Accessory" },
         { eResourceType.Prefab_Unit_Skin, "Prefabs/CharacterParts/Skin" },
+        { eResourceType.Prefab_Unit_Weapon, "Prefabs/CharacterParts/Weapon" },
         { eResourceType.Prefab_UI, "Prefabs/UI" }
     };
 
