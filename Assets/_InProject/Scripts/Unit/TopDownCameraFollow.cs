@@ -4,11 +4,11 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Camera))]
 public class TopDownCameraFollow : MonoBehaviour
 {
-    [SerializeField] private Vector3 offset = new Vector3(0f, 8f, -6f);
+    [SerializeField] private Vector3 offset = new Vector3(0f, 6f, -2.5f);
     [SerializeField] private Vector3 lookOffset = new Vector3(0f, 1f, 0f);
     [SerializeField] private float followSmoothTime = 0.18f;
-    [SerializeField, Min(0.1f)] private float minDistance = 4f;
-    [SerializeField, Min(0.1f)] private float maxDistance = 18f;
+    [SerializeField, Min(0.1f)] private float minDistance = 5f;
+    [SerializeField, Min(0.1f)] private float maxDistance = 12f;
     [SerializeField, Min(0f)] private float zoomSensitivity = 0.01f;
 
     private Transform _target;
