@@ -10,10 +10,10 @@ public class InputManager : MonoSingleton<InputManager>
     private InputActions_RPG_SandBox bindingInput;
     private bool _isInitialized;
 
-    public InputAction MoveAction => bindingInput.Gameplay.Move;
-    public InputAction JumpAction => bindingInput.Gameplay.Jump;
-    public InputAction AttackAction => bindingInput.Gameplay.Attack;
-    public InputAction DodgeAction => bindingInput.Gameplay.Dodge;
+    public InputAction MoveAction => bindingInput == null ? null : bindingInput.Gameplay.Move;
+    public InputAction JumpAction => bindingInput == null ? null : bindingInput.Gameplay.Jump;
+    public InputAction AttackAction => bindingInput == null ? null : bindingInput.Gameplay.Attack;
+    public InputAction DodgeAction => bindingInput == null ? null : bindingInput.Gameplay.Dodge;
 
     private bool _isMoveDir;
     private Vector2 _moveVector = Vector2.zero;
