@@ -295,7 +295,7 @@ public partial class @InputActions_RPG_SandBox: IInputActionCollection2, IDispos
                 {
                     ""name"": """",
                     ""id"": ""efcba152-f098-4f9d-83a7-ba6795ef8777"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -377,6 +377,17 @@ public partial class @InputActions_RPG_SandBox: IInputActionCollection2, IDispos
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e5b42c2-3ed5-4bf0-94ba-8a1b7a58d4cb"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Skill1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },

@@ -6,6 +6,8 @@ public class PlayerUnitMovement : MonoBehaviour
 {
     private static readonly int SpeedParameter = Animator.StringToHash("Speed");
     private static readonly int JumpParameter = Animator.StringToHash("Jump");
+    private static readonly int AttackParameter = Animator.StringToHash("Attack");
+    private static readonly int AttackVariantParameter = Animator.StringToHash("AttackVariant");
 
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private float rotationSpeed = 12f;
@@ -20,6 +22,7 @@ public class PlayerUnitMovement : MonoBehaviour
     private float _groundHeight;
     private float _verticalSpeed;
     private bool _isGrounded = true;
+    private int _attackIndex;
 
     private void Awake()
     {
@@ -31,11 +34,15 @@ public class PlayerUnitMovement : MonoBehaviour
     private void OnEnable()
     {
         _inputReader.JumpPerformed += OnJump;
+        _inputReader.Attack += OnAttack;
+        _inputReader.AttackSkill += OnAttackSkill;
     }
 
     private void OnDisable()
     {
         _inputReader.JumpPerformed -= OnJump;
+        _inputReader.Attack -= OnAttack;
+        _inputReader.AttackSkill -= OnAttackSkill;
     }
 
     private void Update()
@@ -75,6 +82,30 @@ public class PlayerUnitMovement : MonoBehaviour
         _isGrounded = false;
         _verticalSpeed = jumpSpeed;
         _playerUnit.animator.SetTrigger(JumpParameter);
+    }
+
+    private void OnAttack()
+    {
+        if (_playerUnit.animator == null)
+            return;
+
+        PlayAttack(3 + _attackIndex);
+        _attackIndex = (_attackIndex + 1) % 4;
+    }
+
+    private void OnAttackSkill()
+    {
+        if (_playerUnit.animator == null)
+            return;
+
+        PlayAttack(7);
+        _attackIndex = 0;
+    }
+
+    private void PlayAttack(int variant)
+    {
+        _playerUnit.animator.SetInteger(AttackVariantParameter, variant);
+        _playerUnit.animator.SetTrigger(AttackParameter);
     }
 
     private void UpdateVerticalMovement()

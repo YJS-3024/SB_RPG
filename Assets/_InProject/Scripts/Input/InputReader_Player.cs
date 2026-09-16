@@ -13,12 +13,14 @@ public class InputReader_Player : MonoBehaviour
     public event Action JumpPerformed;
     public event Action DodgePerformed;
     public event Action Attack;
+    public event Action AttackSkill;
 
     private bool _isMoving = false;
     private InputAction _moveAction;
     private InputAction _jumpAction;
     private InputAction _dodgeAction;
     private InputAction _attackAction;
+    private InputAction _attackSkillAction;
 
     private void OnEnable()
     {
@@ -27,6 +29,7 @@ public class InputReader_Player : MonoBehaviour
         _jumpAction = InputManager.Instance.JumpAction;
         _dodgeAction = InputManager.Instance.DodgeAction;
         _attackAction = InputManager.Instance.AttackAction;
+        _attackSkillAction = InputManager.Instance.AttackSkillAction;
 
         _moveAction.performed += OnMove;
         _moveAction.canceled += OnMove;
@@ -34,9 +37,8 @@ public class InputReader_Player : MonoBehaviour
         _jumpAction.performed += OnJump;
         _dodgeAction.performed += OnDodge;
 
-        _attackAction.started += OnAttack;
         _attackAction.performed += OnAttack;
-        _attackAction.canceled += OnAttack;
+        _attackSkillAction.performed += OnAttackSkill;
     }
 
     private void OnDisable()
@@ -54,16 +56,16 @@ public class InputReader_Player : MonoBehaviour
             _dodgeAction.performed -= OnDodge;
 
         if (_attackAction != null)
-        {
-            _attackAction.started -= OnAttack;
             _attackAction.performed -= OnAttack;
-            _attackAction.canceled -= OnAttack;
-        }
+
+        if (_attackSkillAction != null)
+            _attackSkillAction.performed -= OnAttackSkill;
 
         _moveAction = null;
         _jumpAction = null;
         _dodgeAction = null;
         _attackAction = null;
+        _attackSkillAction = null;
         Move = Vector2.zero;
     }
     private void OnMove(InputAction.CallbackContext context)
@@ -85,5 +87,10 @@ public class InputReader_Player : MonoBehaviour
     private void OnAttack(InputAction.CallbackContext context)
     {
         Attack?.Invoke();
+    }
+
+    private void OnAttackSkill(InputAction.CallbackContext context)
+    {
+        AttackSkill?.Invoke();
     }
 }

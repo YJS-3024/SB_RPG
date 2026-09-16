@@ -13,6 +13,7 @@ public class InputManager : MonoSingleton<InputManager>
     public InputAction MoveAction => bindingInput == null ? null : bindingInput.Gameplay.Move;
     public InputAction JumpAction => bindingInput == null ? null : bindingInput.Gameplay.Jump;
     public InputAction AttackAction => bindingInput == null ? null : bindingInput.Gameplay.Attack;
+    public InputAction AttackSkillAction => bindingInput == null ? null : bindingInput.Gameplay.Skill1;
     public InputAction DodgeAction => bindingInput == null ? null : bindingInput.Gameplay.Dodge;
 
     private bool _isMoveDir;
