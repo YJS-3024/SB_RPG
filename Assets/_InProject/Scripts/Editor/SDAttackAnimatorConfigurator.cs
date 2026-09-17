@@ -91,6 +91,17 @@ public static class SDAttackAnimatorConfigurator
             changed = true;
         }
 
+        if (!stateMachine.anyStateTransitions.Any(transition => transition.destinationState == returnState))
+        {
+            AnimatorStateTransition toReturn = stateMachine.AddAnyStateTransition(returnState);
+            toReturn.AddCondition(AnimatorConditionMode.If, 0f, "Attack");
+            toReturn.AddCondition(AnimatorConditionMode.Equals, 8f, "AttackVariant");
+            toReturn.hasExitTime = false;
+            toReturn.duration = 0.08f;
+            toReturn.canTransitionToSelf = false;
+            changed = true;
+        }
+
         for (int i = 0; i < clips.Length; i++)
         {
             string stateName = i < 3

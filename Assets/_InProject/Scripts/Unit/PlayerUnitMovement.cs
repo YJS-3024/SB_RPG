@@ -36,6 +36,7 @@ public class PlayerUnitMovement : MonoBehaviour
         _inputReader.JumpPerformed += OnJump;
         _inputReader.Attack += OnAttack;
         _inputReader.AttackSkill += OnAttackSkill;
+        _inputReader.AttackPreview += OnAttackPreview;
     }
 
     private void OnDisable()
@@ -43,6 +44,7 @@ public class PlayerUnitMovement : MonoBehaviour
         _inputReader.JumpPerformed -= OnJump;
         _inputReader.Attack -= OnAttack;
         _inputReader.AttackSkill -= OnAttackSkill;
+        _inputReader.AttackPreview -= OnAttackPreview;
     }
 
     private void Update()
@@ -100,6 +102,15 @@ public class PlayerUnitMovement : MonoBehaviour
 
         PlayAttack(7);
         _attackIndex = 0;
+    }
+
+    private void OnAttackPreview(int slot)
+    {
+        if (_playerUnit.animator == null || slot < 1 || slot > 9)
+            return;
+
+        int variant = slot <= 5 ? slot + 2 : slot <= 8 ? slot - 6 : 8;
+        PlayAttack(variant);
     }
 
     private void PlayAttack(int variant)

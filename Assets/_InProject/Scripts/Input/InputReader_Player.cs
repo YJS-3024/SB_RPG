@@ -14,6 +14,7 @@ public class InputReader_Player : MonoBehaviour
     public event Action DodgePerformed;
     public event Action Attack;
     public event Action AttackSkill;
+    public event Action<int> AttackPreview;
 
     private bool _isMoving = false;
     private InputAction _moveAction;
@@ -68,6 +69,24 @@ public class InputReader_Player : MonoBehaviour
         _attackSkillAction = null;
         Move = Vector2.zero;
     }
+
+    private void Update()
+    {
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard == null)
+            return;
+
+        if (keyboard.digit1Key.wasPressedThisFrame) AttackPreview?.Invoke(1);
+        if (keyboard.digit2Key.wasPressedThisFrame) AttackPreview?.Invoke(2);
+        if (keyboard.digit3Key.wasPressedThisFrame) AttackPreview?.Invoke(3);
+        if (keyboard.digit4Key.wasPressedThisFrame) AttackPreview?.Invoke(4);
+        if (keyboard.digit5Key.wasPressedThisFrame) AttackPreview?.Invoke(5);
+        if (keyboard.digit6Key.wasPressedThisFrame) AttackPreview?.Invoke(6);
+        if (keyboard.digit7Key.wasPressedThisFrame) AttackPreview?.Invoke(7);
+        if (keyboard.digit8Key.wasPressedThisFrame) AttackPreview?.Invoke(8);
+        if (keyboard.digit9Key.wasPressedThisFrame) AttackPreview?.Invoke(9);
+    }
+
     private void OnMove(InputAction.CallbackContext context)
     {
         Move = context.ReadValue<Vector2>();
@@ -91,6 +110,9 @@ public class InputReader_Player : MonoBehaviour
 
     private void OnAttackSkill(InputAction.CallbackContext context)
     {
+        if (context.control.device is Keyboard)
+            return;
+
         AttackSkill?.Invoke();
     }
 }
