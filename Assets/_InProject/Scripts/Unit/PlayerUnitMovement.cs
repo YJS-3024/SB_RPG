@@ -16,6 +16,7 @@ public class PlayerUnitMovement : MonoBehaviour
     [SerializeField] private float fallGravityMultiplier = 1.6f;
     [SerializeField] private float maxFallSpeed = 12f;
     [SerializeField] private float animationDampTime = 0.1f;
+    [SerializeField, Min(0.01f)] private float comboResetTime = 1.5f;
 
     private InputReader_Player _inputReader;
     private PlayerUnit _playerUnit;
@@ -23,6 +24,7 @@ public class PlayerUnitMovement : MonoBehaviour
     private float _verticalSpeed;
     private bool _isGrounded = true;
     private int _attackIndex;
+    private float _lastAttackTime = float.NegativeInfinity;
 
     private void Awake()
     {
@@ -33,6 +35,8 @@ public class PlayerUnitMovement : MonoBehaviour
 
     private void OnEnable()
     {
+        _attackIndex = 0;
+        _lastAttackTime = float.NegativeInfinity;
         _inputReader.JumpPerformed += OnJump;
         _inputReader.Attack += OnAttack;
         _inputReader.AttackSkill += OnAttackSkill;
@@ -91,8 +95,13 @@ public class PlayerUnitMovement : MonoBehaviour
         if (_playerUnit.animator == null)
             return;
 
+        float now = Time.time;
+        if (now - _lastAttackTime >= comboResetTime)
+            _attackIndex = 0;
+
         PlayAttack(3 + _attackIndex);
-        _attackIndex = (_attackIndex + 1) % 4;
+        _attackIndex = (_attackIndex + 1) % 3;
+        _lastAttackTime = now;
     }
 
     private void OnAttackSkill()
@@ -102,6 +111,7 @@ public class PlayerUnitMovement : MonoBehaviour
 
         PlayAttack(7);
         _attackIndex = 0;
+        _lastAttackTime = float.NegativeInfinity;
     }
 
     private void OnAttackPreview(int slot)
