@@ -76,7 +76,7 @@ public class InputReader_Player : MonoBehaviour
     private void Update()
     {
         Mouse mouse = Mouse.current;
-        if (mouse != null && mouse.rightButton.wasPressedThisFrame)
+        if (mouse != null && Cursor.lockState != CursorLockMode.Locked && mouse.rightButton.wasPressedThisFrame)
             MoveRequested?.Invoke(mouse.position.ReadValue());
 
         Keyboard keyboard = Keyboard.current;

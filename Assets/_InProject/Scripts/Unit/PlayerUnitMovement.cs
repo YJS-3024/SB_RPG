@@ -87,6 +87,17 @@ public class PlayerUnitMovement : MonoBehaviour
         bool isRunning = _inputReader.IsRunning;
         Vector2 input = _inputReader.Move;
         Vector3 direction = new Vector3(input.x, 0f, input.y);
+        Camera camera = Camera.main;
+        if (camera != null)
+        {
+            Vector3 forward = camera.transform.forward;
+            forward.y = 0f;
+            forward.Normalize();
+            Vector3 right = camera.transform.right;
+            right.y = 0f;
+            right.Normalize();
+            direction = right * input.x + forward * input.y;
+        }
         float inputAmount = direction.sqrMagnitude > 0f ? (isRunning ? 1f : 0.5f) : 0f;
 
         if (inputAmount > 0f)
