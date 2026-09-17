@@ -9,12 +9,15 @@ using UnityEngine.InputSystem;
 public class InputReader_Player : MonoBehaviour
 {
     public Vector2 Move { get; private set; }
+    public bool IsRunning => Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed;
 
     public event Action JumpPerformed;
     public event Action DodgePerformed;
     public event Action Attack;
     public event Action AttackSkill;
     public event Action<int> AttackPreview;
+    public event Action<WeaponAnimationStyle> WeaponStyleRequested;
+    public event Action<Vector2> MoveRequested;
 
     private bool _isMoving = false;
     private InputAction _moveAction;
@@ -72,19 +75,27 @@ public class InputReader_Player : MonoBehaviour
 
     private void Update()
     {
+        Mouse mouse = Mouse.current;
+        if (mouse != null && mouse.rightButton.wasPressedThisFrame)
+            MoveRequested?.Invoke(mouse.position.ReadValue());
+
         Keyboard keyboard = Keyboard.current;
         if (keyboard == null)
             return;
 
-        if (keyboard.digit1Key.wasPressedThisFrame) AttackPreview?.Invoke(1);
-        if (keyboard.digit2Key.wasPressedThisFrame) AttackPreview?.Invoke(2);
-        if (keyboard.digit3Key.wasPressedThisFrame) AttackPreview?.Invoke(3);
-        if (keyboard.digit4Key.wasPressedThisFrame) AttackPreview?.Invoke(4);
-        if (keyboard.digit5Key.wasPressedThisFrame) AttackPreview?.Invoke(5);
-        if (keyboard.digit6Key.wasPressedThisFrame) AttackPreview?.Invoke(6);
-        if (keyboard.digit7Key.wasPressedThisFrame) AttackPreview?.Invoke(7);
-        if (keyboard.digit8Key.wasPressedThisFrame) AttackPreview?.Invoke(8);
-        if (keyboard.digit9Key.wasPressedThisFrame) AttackPreview?.Invoke(9);
+        if (keyboard.digit0Key.wasPressedThisFrame) WeaponStyleRequested?.Invoke(WeaponAnimationStyle.Unarmed);
+        if (keyboard.digit1Key.wasPressedThisFrame) WeaponStyleRequested?.Invoke(WeaponAnimationStyle.Greatsword);
+        if (keyboard.digit2Key.wasPressedThisFrame) WeaponStyleRequested?.Invoke(WeaponAnimationStyle.TwinDagger);
+
+        if (keyboard.numpad1Key.wasPressedThisFrame) AttackPreview?.Invoke(1);
+        if (keyboard.numpad2Key.wasPressedThisFrame) AttackPreview?.Invoke(2);
+        if (keyboard.numpad3Key.wasPressedThisFrame) AttackPreview?.Invoke(3);
+        if (keyboard.numpad4Key.wasPressedThisFrame) AttackPreview?.Invoke(4);
+        if (keyboard.numpad5Key.wasPressedThisFrame) AttackPreview?.Invoke(5);
+        if (keyboard.numpad6Key.wasPressedThisFrame) AttackPreview?.Invoke(6);
+        if (keyboard.numpad7Key.wasPressedThisFrame) AttackPreview?.Invoke(7);
+        if (keyboard.numpad8Key.wasPressedThisFrame) AttackPreview?.Invoke(8);
+        if (keyboard.numpad9Key.wasPressedThisFrame) AttackPreview?.Invoke(9);
     }
 
     private void OnMove(InputAction.CallbackContext context)

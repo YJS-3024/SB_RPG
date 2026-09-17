@@ -33,9 +33,15 @@ public class PlayerUnit : UnitBase
     private const string HairFrontName = "hair_front";
     private const string HairBackName = "hair_back";
     private const string GreatswordName = "prf_Prop_R_GreatSword1";
+    private const string RightDaggerName = "prf_Prop_R_TwinDagger1";
+    private const string LeftDaggerName = "prf_Prop_L_TwinDagger1";
 
     private GameObject _rigInstance;
     private Transform _rightHand;
+    private Transform _leftHand;
+    private GameObject _greatsword;
+    private GameObject _rightDagger;
+    private GameObject _leftDagger;
     private bool _isCreated;
 
     public Animator animator;
@@ -87,7 +93,7 @@ public class PlayerUnit : UnitBase
             return;
         }
 
-        if (!LoadGreatsword())
+        if (!LoadWeapons())
         {
             DestroyUnit();
             return;
@@ -114,6 +120,11 @@ public class PlayerUnit : UnitBase
 
         _rigInstance = null;
         _rightHand = null;
+        _leftHand = null;
+        _greatsword = null;
+        _rightDagger = null;
+        _leftDagger = null;
+        animator = null;
         _isCreated = false;
     }
 
@@ -139,8 +150,9 @@ public class PlayerUnit : UnitBase
         rootEyeL = FindChild(_rigInstance.transform, "Eye_L");
         rootEyeR = FindChild(_rigInstance.transform, "Eye_R");
         _rightHand = FindChild(_rigInstance.transform, "Hand_R");
+        _leftHand = FindChild(_rigInstance.transform, "Hand_L");
 
-        if (animator != null && rootBone != null && rootHead != null && rootEyeL != null && rootEyeR != null && _rightHand != null)
+        if (animator != null && rootBone != null && rootHead != null && rootEyeL != null && rootEyeR != null && _rightHand != null && _leftHand != null)
             return true;
 
         RuntimeLog.Error("BaseRig is missing Animator or required bones.");
@@ -148,18 +160,41 @@ public class PlayerUnit : UnitBase
         return false;
     }
 
-    private bool LoadGreatsword()
+    private bool LoadWeapons()
+    {
+        _greatsword = CreateWeapon(GreatswordName, _rightHand);
+        _rightDagger = CreateWeapon(RightDaggerName, _rightHand);
+        _leftDagger = CreateWeapon(LeftDaggerName, _leftHand);
+        if (_greatsword == null || _rightDagger == null || _leftDagger == null)
+            return false;
+
+        return EquipWeapon(GetComponent<PlayerUnitMovement>().WeaponStyle);
+    }
+
+    public bool EquipWeapon(WeaponAnimationStyle style)
+    {
+        if (_greatsword == null || _rightDagger == null || _leftDagger == null ||
+            style < WeaponAnimationStyle.Unarmed || style > WeaponAnimationStyle.TwinDagger)
+            return false;
+
+        _greatsword.SetActive(style == WeaponAnimationStyle.Greatsword);
+        _rightDagger.SetActive(style == WeaponAnimationStyle.TwinDagger);
+        _leftDagger.SetActive(style == WeaponAnimationStyle.TwinDagger);
+        GetComponent<PlayerUnitMovement>().SetWeaponStyle(style);
+        return true;
+    }
+
+    private GameObject CreateWeapon(string assetName, Transform hand)
     {
         GameObject prefab = ResourceManager.Instance.LoadCached<GameObject>(
-            eResourceType.Prefab_Unit_Weapon, GreatswordName);
+            eResourceType.Prefab_Unit_Weapon, assetName);
         if (prefab == null)
         {
-            RuntimeLog.Error("PlayerUnit greatsword load failed.");
-            return false;
+            RuntimeLog.Error("PlayerUnit weapon load failed: " + assetName);
+            return null;
         }
 
-        Instantiate(prefab, _rightHand, false);
-        return true;
+        return Instantiate(prefab, hand, false);
     }
 
     private T LoadPart<T>(eResourceType type, string assetName) where T : Component
