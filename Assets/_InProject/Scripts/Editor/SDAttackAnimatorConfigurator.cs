@@ -75,7 +75,7 @@ public static class SDAttackAnimatorConfigurator
         AnimatorState returnState = FindState(stateMachine, "Attack_Greatsword_Return");
         if (returnState == null)
         {
-            returnState = stateMachine.AddState("Attack_Greatsword_Return", new Vector3(800f, 690f));
+            returnState = stateMachine.AddState("Attack_Greatsword_Return", new Vector3(840f, 1000f));
             changed = true;
         }
 
@@ -111,7 +111,7 @@ public static class SDAttackAnimatorConfigurator
             if (attackState == null)
             {
                 attackState = stateMachine.AddState(stateName,
-                    new Vector3(i < 3 ? 560f : 800f, 250f + (i < 3 ? i : i - 3) * 80f));
+                    new Vector3(i < 3 ? 320f : 600f, 600f + (i < 3 ? i : i - 3) * 100f));
                 changed = true;
             }
 

@@ -317,7 +317,7 @@ public partial class @InputActions_RPG_SandBox: IInputActionCollection2, IDispos
                 {
                     ""name"": """",
                     ""id"": ""0c0527da-6891-4550-b41d-6bfe6cb72e02"",
-                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",

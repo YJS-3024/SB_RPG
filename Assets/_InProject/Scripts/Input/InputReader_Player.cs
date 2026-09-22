@@ -76,8 +76,8 @@ public class InputReader_Player : MonoBehaviour
     private void Update()
     {
         Mouse mouse = Mouse.current;
-        if (mouse != null && Cursor.lockState != CursorLockMode.Locked && mouse.rightButton.wasPressedThisFrame)
-            MoveRequested?.Invoke(mouse.position.ReadValue());
+        if (mouse != null)
+            ReadMouse(mouse);
 
         Keyboard keyboard = Keyboard.current;
         if (keyboard == null)
@@ -96,6 +96,13 @@ public class InputReader_Player : MonoBehaviour
         if (keyboard.numpad7Key.wasPressedThisFrame) AttackPreview?.Invoke(7);
         if (keyboard.numpad8Key.wasPressedThisFrame) AttackPreview?.Invoke(8);
         if (keyboard.numpad9Key.wasPressedThisFrame) AttackPreview?.Invoke(9);
+    }
+
+    private void ReadMouse(Mouse mouse)
+    {
+        if (Cursor.lockState != CursorLockMode.Locked &&
+            mouse.rightButton.wasPressedThisFrame)
+            MoveRequested?.Invoke(mouse.position.ReadValue());
     }
 
     private void OnMove(InputAction.CallbackContext context)

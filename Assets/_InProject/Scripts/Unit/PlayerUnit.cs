@@ -35,6 +35,9 @@ public class PlayerUnit : UnitBase
     private const string GreatswordName = "prf_Prop_R_GreatSword1";
     private const string RightDaggerName = "prf_Prop_R_TwinDagger1";
     private const string LeftDaggerName = "prf_Prop_L_TwinDagger1";
+    private static readonly int HitParameter = Animator.StringToHash("Hit");
+    private static readonly int DieParameter = Animator.StringToHash("Die");
+    private static readonly int HitState = Animator.StringToHash("Hit");
 
     private GameObject _rigInstance;
     private Transform _rightHand;
@@ -43,6 +46,23 @@ public class PlayerUnit : UnitBase
     private GameObject _rightDagger;
     private GameObject _leftDagger;
     private bool _isCreated;
+    private bool _isDead;
+
+    public bool IsDead => _isDead;
+    public bool IsHitReacting
+    {
+        get
+        {
+            if (_isDead || animator == null || animator.runtimeAnimatorController == null)
+                return false;
+
+            if (animator.GetCurrentAnimatorStateInfo(0).shortNameHash == HitState)
+                return true;
+
+            return animator.IsInTransition(0) &&
+                animator.GetNextAnimatorStateInfo(0).shortNameHash == HitState;
+        }
+    }
 
     public Animator animator;
     public Transform rootBone;
@@ -74,7 +94,10 @@ public class PlayerUnit : UnitBase
         EnsureMovementComponents();
 
         if (!LoadRig())
+        {
+            DestroyUnit();
             return;
+        }
 
         bodySkin = LoadPart<UnitSkinParts>(eResourceType.Prefab_Unit_Costume, BodyCostumeName);
         headAccSkin = LoadPart<UnitSkinParts>(eResourceType.Prefab_Unit_Accessory, HeadAccessoryName);
@@ -126,6 +149,7 @@ public class PlayerUnit : UnitBase
         _leftDagger = null;
         animator = null;
         _isCreated = false;
+        _isDead = false;
     }
 
     private void EnsureMovementComponents()
@@ -223,5 +247,37 @@ public class PlayerUnit : UnitBase
         }
 
         return null;
+    }
+
+
+public bool PlayHitReaction()
+    {
+        if (_isDead || animator == null)
+            return false;
+
+        animator.ResetTrigger("Attack");
+        animator.ResetTrigger("Jump");
+        animator.ResetTrigger("Dash");
+        animator.ResetTrigger("DashLeft");
+        animator.ResetTrigger("DashRight");
+        animator.SetTrigger(HitParameter);
+        return true;
+    }
+
+    public bool PlayDeath()
+    {
+        if (_isDead || animator == null)
+            return false;
+
+        _isDead = true;
+        animator.ResetTrigger(HitParameter);
+        animator.ResetTrigger("Attack");
+        animator.ResetTrigger("Jump");
+        animator.ResetTrigger("Dash");
+        animator.ResetTrigger("DashLeft");
+        animator.ResetTrigger("DashRight");
+        animator.SetFloat("Speed", 0f);
+        animator.SetTrigger(DieParameter);
+        return true;
     }
 }

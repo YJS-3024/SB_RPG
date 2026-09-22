@@ -1,31 +1,55 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[DefaultExecutionOrder(-100)]
 [RequireComponent(typeof(Camera))]
 public class TopDownCameraFollow : MonoBehaviour
 {
+    [Header("Follow")]
     [SerializeField] private Vector3 offset = new Vector3(0f, 6f, -2.5f);
     [SerializeField] private Vector3 lookOffset = new Vector3(0f, 1f, 0f);
-    [SerializeField] private float followSmoothTime = 0.18f;
+
+    [Header("Orbit")]
     [SerializeField, Min(0f)] private float horizontalSensitivity = 0.15f;
+    [SerializeField, Min(0f)] private float verticalSensitivity = 0.15f;
+    [SerializeField] private bool invertVerticalInput = true;
+    [SerializeField, Range(-89f, 89f)] private float minVerticalAngle = 25f;
+    [SerializeField, Range(-89f, 89f)] private float maxVerticalAngle = 85f;
+
+    [Header("Zoom")]
     [SerializeField, Min(0.1f)] private float minDistance = 5f;
     [SerializeField, Min(0.1f)] private float maxDistance = 12f;
     [SerializeField, Min(0f)] private float zoomSensitivity = 0.01f;
 
     private Transform _target;
-    private Vector3 _followVelocity;
+    private Vector3 _horizontalOrbitDirection;
     private float _distance;
-    private float _yaw;
-    private bool _cursorFree;
+    private float _followHeight;
+    private float _yawOffset;
+    private float _verticalAngle;
+    private bool _isCursorReleased;
 
     private void Awake()
     {
-        _distance = Mathf.Clamp(offset.magnitude, minDistance, Mathf.Max(minDistance, maxDistance));
+        Vector3 initialDirection = offset.sqrMagnitude > 0f
+            ? offset.normalized
+            : new Vector3(0f, 0.9f, -0.4f).normalized;
+        _horizontalOrbitDirection = Vector3.ProjectOnPlane(initialDirection, Vector3.up).normalized;
+        if (_horizontalOrbitDirection.sqrMagnitude <= Mathf.Epsilon)
+            _horizontalOrbitDirection = Vector3.back;
+
+        float horizontalMagnitude = Vector3.ProjectOnPlane(initialDirection, Vector3.up).magnitude;
+        _verticalAngle = Mathf.Atan2(initialDirection.y, horizontalMagnitude) * Mathf.Rad2Deg;
+        _verticalAngle = ClampVerticalAngle(_verticalAngle);
+        _distance = Mathf.Clamp(
+            Mathf.Max(offset.magnitude, minDistance),
+            minDistance,
+            Mathf.Max(minDistance, maxDistance));
     }
 
     private void OnEnable()
     {
-        SetCursorFree(false);
+        SetCursorReleased(false, true);
     }
 
     private void OnDisable()
@@ -37,67 +61,109 @@ public class TopDownCameraFollow : MonoBehaviour
     private void OnApplicationFocus(bool hasFocus)
     {
         if (hasFocus)
-            ApplyCursorState();
+            SetCursorReleased(IsAltHeld(), true);
     }
 
     public void SetTarget(Transform target)
     {
         _target = target;
-        _followVelocity = Vector3.zero;
-
         if (_target != null)
-        {
-            transform.position = _target.position + GetOffset();
-            transform.LookAt(_target.position + lookOffset);
-        }
-    }
-
-    private void LateUpdate()
-    {
-        Keyboard keyboard = Keyboard.current;
-        if (keyboard != null &&
-            (keyboard.leftAltKey.wasPressedThisFrame || keyboard.rightAltKey.wasPressedThisFrame))
-            SetCursorFree(!_cursorFree);
-
-        Mouse mouse = Mouse.current;
-        if (mouse != null)
-        {
-            if (!_cursorFree)
-                _yaw += mouse.delta.ReadValue().x * horizontalSensitivity;
-
-            float scroll = mouse.scroll.ReadValue().y;
-            _distance = Mathf.Clamp(
-                _distance - scroll * zoomSensitivity,
-                minDistance,
-                Mathf.Max(minDistance, maxDistance));
-        }
+            _followHeight = _target.position.y;
 
         if (_target == null)
             return;
 
-        Vector3 targetPosition = _target.position + GetOffset();
-        transform.position = Vector3.SmoothDamp(
-            transform.position,
-            targetPosition,
-            ref _followVelocity,
-            followSmoothTime);
-        transform.LookAt(_target.position + lookOffset);
+        transform.position = GetDesiredPosition();
+        LookAtTarget();
     }
 
-    private Vector3 GetOffset()
+private void LateUpdate()
     {
-        return Quaternion.Euler(0f, _yaw, 0f) * offset.normalized * _distance;
+        if (_target == null)
+            return;
+
+        transform.position = GetDesiredPosition();
+        LookAtTarget();
     }
 
-    private void SetCursorFree(bool cursorFree)
+    private void UpdateMouseInput()
     {
-        _cursorFree = cursorFree;
-        ApplyCursorState();
+        Mouse mouse = Mouse.current;
+        if (mouse == null)
+            return;
+
+        if (!_isCursorReleased && mouse.rightButton.isPressed)
+        {
+            Vector2 delta = mouse.delta.ReadValue();
+            _yawOffset += delta.x * horizontalSensitivity;
+            float verticalInput = invertVerticalInput ? -delta.y : delta.y;
+            _verticalAngle = ClampVerticalAngle(
+                _verticalAngle + verticalInput * verticalSensitivity);
+        }
+
+        float scroll = mouse.scroll.ReadValue().y;
+        _distance = Mathf.Clamp(
+            _distance - scroll * zoomSensitivity,
+            minDistance,
+            Mathf.Max(minDistance, maxDistance));
     }
 
-    private void ApplyCursorState()
+    private Vector3 GetDesiredPosition()
     {
-        Cursor.lockState = _cursorFree ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = _cursorFree;
+        Quaternion cameraYaw = Quaternion.Euler(0f, _yawOffset, 0f);
+        float verticalRadians = _verticalAngle * Mathf.Deg2Rad;
+        Vector3 horizontalDirection = cameraYaw * _horizontalOrbitDirection;
+        Vector3 worldDirection =
+            horizontalDirection * Mathf.Cos(verticalRadians) +
+            Vector3.up * Mathf.Sin(verticalRadians);
+        return GetFollowOrigin() + worldDirection * _distance;
+    }
+
+    private float ClampVerticalAngle(float angle)
+    {
+        float minAngle = Mathf.Min(minVerticalAngle, maxVerticalAngle);
+        float maxAngle = Mathf.Max(minVerticalAngle, maxVerticalAngle);
+        return Mathf.Clamp(angle, minAngle, maxAngle);
+    }
+    private Vector3 GetFollowOrigin()
+    {
+        Vector3 position = _target.position;
+        position.y = _followHeight;
+        return position;
+    }
+
+    private void LookAtTarget()
+    {
+        transform.LookAt(GetFollowOrigin() + lookOffset);
+    }
+
+    private static bool IsAltHeld()
+    {
+        Keyboard keyboard = Keyboard.current;
+        return keyboard != null &&
+               (keyboard.leftAltKey.isPressed || keyboard.rightAltKey.isPressed);
+    }
+
+    private void SetCursorReleased(bool released, bool force = false)
+    {
+        if (!force && _isCursorReleased == released)
+            return;
+
+        _isCursorReleased = released;
+        Cursor.lockState = released ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = released;
+    }
+
+
+private void Update()
+    {
+        SetCursorReleased(IsAltHeld());
+        UpdateMouseInput();
+
+        if (_target != null)
+        {
+            transform.position = GetDesiredPosition();
+            LookAtTarget();
+        }
     }
 }
