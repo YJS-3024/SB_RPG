@@ -14,14 +14,3 @@ https://www.notion.so/haonstore/Guide-How-to-Import-Unity-Toon-Shader-19ba5026cf
 - Other assets follow the end user license provided by the market.
 - Please refer to the Unity-chan homepage to see how far the Unity-chan license applies. This scope of application is updated when the license is updated, so it is most accurate to check through the Unity-chan official homepage and customer inquiries.
 https://unity-chan.com/contents/guideline/
-
-
--------------------------------------------------------------------------------------
-Cooperative developers by package
-
-- SD Basic Hand Prop - SD Unity-chan Haon Custom
-	ohranman
-- SD Furniture - SD Unity-chan Haon Custom
-	ohranman
-- LiveIllust(Spine) Relena
-	Kostop / Twitter @kostop0515
