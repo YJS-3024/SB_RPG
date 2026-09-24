@@ -22,7 +22,7 @@ public enum eUnitParts
 /// <summary>
 /// 공용 골격에 캐릭터 파츠를 결합하고 파츠의 Animator를 비활성화한다.
 /// </summary>
-public class PlayerUnit : UnitBase
+public class PlayerUnit : UnitBase, IDamageable
 {
     private const string BaseRigName = "BaseRig";
     private const string BodyCostumeName = "body_costume_BunnyGirl";
@@ -45,10 +45,17 @@ public class PlayerUnit : UnitBase
     private GameObject _greatsword;
     private GameObject _rightDagger;
     private GameObject _leftDagger;
+    private WeaponAnimationStyle _equippedWeaponStyle;
+    private bool _weaponsVisible = true;
+    [SerializeField, Min(1)] private int maxHealth = 100;
+
     private bool _isCreated;
     private bool _isDead;
+    private int _currentHealth;
 
     public bool IsDead => _isDead;
+    public bool IsAlive => _isCreated && !_isDead && _currentHealth > 0;
+    public int CurrentHealth => _currentHealth;
     public bool IsHitReacting
     {
         get
@@ -90,6 +97,8 @@ public class PlayerUnit : UnitBase
             return;
 
         _isCreated = true;
+        _isDead = false;
+        _currentHealth = maxHealth;
 
         EnsureMovementComponents();
 
@@ -147,9 +156,11 @@ public class PlayerUnit : UnitBase
         _greatsword = null;
         _rightDagger = null;
         _leftDagger = null;
+        _weaponsVisible = true;
         animator = null;
         _isCreated = false;
         _isDead = false;
+        _currentHealth = 0;
     }
 
     private void EnsureMovementComponents()
@@ -159,6 +170,15 @@ public class PlayerUnit : UnitBase
 
         if (GetComponent<PlayerUnitMovement>() == null)
             gameObject.AddComponent<PlayerUnitMovement>();
+
+        CapsuleCollider hitCollider = GetComponent<CapsuleCollider>();
+        if (hitCollider == null)
+            hitCollider = gameObject.AddComponent<CapsuleCollider>();
+
+        hitCollider.center = new Vector3(0f, 1f, 0f);
+        hitCollider.height = 2f;
+        hitCollider.radius = 0.45f;
+        hitCollider.isTrigger = true;
     }
 
     private bool LoadRig()
@@ -201,11 +221,29 @@ public class PlayerUnit : UnitBase
             style < WeaponAnimationStyle.Unarmed || style > WeaponAnimationStyle.TwinDagger)
             return false;
 
-        _greatsword.SetActive(style == WeaponAnimationStyle.Greatsword);
-        _rightDagger.SetActive(style == WeaponAnimationStyle.TwinDagger);
-        _leftDagger.SetActive(style == WeaponAnimationStyle.TwinDagger);
+        _equippedWeaponStyle = style;
+        ApplyWeaponVisibility();
         GetComponent<PlayerUnitMovement>().SetWeaponStyle(style);
         return true;
+    }
+
+    public void SetWeaponsVisible(bool visible)
+    {
+        if (_weaponsVisible == visible)
+            return;
+
+        _weaponsVisible = visible;
+        ApplyWeaponVisibility();
+    }
+
+    private void ApplyWeaponVisibility()
+    {
+        if (_greatsword != null)
+            _greatsword.SetActive(_weaponsVisible && _equippedWeaponStyle == WeaponAnimationStyle.Greatsword);
+        if (_rightDagger != null)
+            _rightDagger.SetActive(_weaponsVisible && _equippedWeaponStyle == WeaponAnimationStyle.TwinDagger);
+        if (_leftDagger != null)
+            _leftDagger.SetActive(_weaponsVisible && _equippedWeaponStyle == WeaponAnimationStyle.TwinDagger);
     }
 
     private GameObject CreateWeapon(string assetName, Transform hand)
@@ -249,6 +287,18 @@ public class PlayerUnit : UnitBase
         return null;
     }
 
+
+public bool ReceiveDamage(int damage, GameObject attacker, Vector3 hitPoint)
+    {
+        if (_isDead || damage <= 0)
+            return false;
+
+        _currentHealth = Mathf.Max(0, _currentHealth - damage);
+        if (_currentHealth == 0)
+            return PlayDeath();
+
+        return PlayHitReaction();
+    }
 
 public bool PlayHitReaction()
     {

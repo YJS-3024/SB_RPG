@@ -21,7 +21,7 @@ public class InputManager : MonoSingleton<InputManager>
 
     public override bool Initialize()
     {
-        if (_isInitialized)
+        if (_isInitialized && bindingInput != null)
             return true;
 
         bindingInput = new InputActions_RPG_SandBox();

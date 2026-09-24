@@ -16,6 +16,8 @@ public static class SDAnimControllerConfigurator
     private const string SideDashAssetPath = "Assets/Haons SD series Pack/Animation/Action Adventure(Adv)/SideStep_Move.fbx";
     private const string HitAssetPath = "Assets/Haons SD series Pack/Animation/Action Adventure(Adv)/Damaged_ToBack.FBX";
     private const string DeathAssetPath = "Assets/Haons SD series Pack/Animation/Action Adventure(Adv)/Die.fbx";
+    private const float FrontDashDuration = 0.3f;
+    private const float SideDashDuration = 0.267f;
 
     static SDAnimControllerConfigurator()
     {
@@ -43,6 +45,12 @@ public static void Configure()
             LoadClip(TwinDaggerPath + "WTD_Walk_Front.FBX", "WTD_Walk_Front@Loop"),
             LoadClip(TwinDaggerPath + "WTD_Run_Front.FBX", "WTD_Run_Front@Loop")
         };
+        AnimationClip greatswordBack = LoadClip(
+            GreatswordPath + "WGS_Walk_Lookat_Back.FBX",
+            "WGS_Walk_Lookat_Back@Loop");
+        AnimationClip twinDaggerBack = LoadClip(
+            TwinDaggerPath + "WTD_Walk_Lookat_Back.FBX",
+            "WTD_Walk_Lookat_Back@Loop");
         AnimationClip jump = LoadClip(JumpAssetPath, "Jump_Small root");
         AnimationClip dash = LoadClip(DashAssetPath, "Dash_Front@loop");
         AnimationClip sideDashLeft = LoadClip(SideDashAssetPath, "SideStep_LeftMove@loop");
@@ -51,7 +59,10 @@ public static void Configure()
         AnimationClip death = LoadClip(DeathAssetPath, "Die");
 
         if (controller == null || controller.layers.Length == 0 ||
-            unarmed.Any(clip => clip == null) || greatsword.Any(clip => clip == null) || twinDagger.Any(clip => clip == null) || jump == null || dash == null || sideDashLeft == null || sideDashRight == null || hit == null || death == null)
+            unarmed.Any(clip => clip == null) || greatsword.Any(clip => clip == null) ||
+            twinDagger.Any(clip => clip == null) || greatswordBack == null || twinDaggerBack == null ||
+            jump == null || dash == null || sideDashLeft == null || sideDashRight == null ||
+            hit == null || death == null)
         {
             Debug.LogError("SD Animator configuration failed: controller or movement clip was not found.");
             return;
@@ -117,6 +128,8 @@ public static void Configure()
             blendTree.AddChild(greatsword[i], new Vector2(i * 0.5f, 0f));
             blendTree.AddChild(twinDagger[i], new Vector2(i * 0.5f, 1f));
         }
+        blendTree.AddChild(greatswordBack, new Vector2(-0.5f, 0f));
+        blendTree.AddChild(twinDaggerBack, new Vector2(-0.5f, 1f));
 
         jumpState.motion = jump;
         dashState.motion = dash;
@@ -124,8 +137,9 @@ public static void Configure()
         sideDashRightState.motion = sideDashRight;
         hitState.motion = hit;
         deathState.motion = death;
-        sideDashLeftState.speed = sideDashLeft.length / 0.267f;
-        sideDashRightState.speed = sideDashRight.length / 0.267f;
+        dashState.speed = dash.length / FrontDashDuration;
+        sideDashLeftState.speed = sideDashLeft.length / SideDashDuration;
+        sideDashRightState.speed = sideDashRight.length / SideDashDuration;
         if (!stateMachine.anyStateTransitions.Any(transition => transition.destinationState == jumpState))
         {
             AnimatorStateTransition toJump = stateMachine.AddAnyStateTransition(jumpState);
@@ -267,11 +281,15 @@ private static bool IsConfigured(AnimatorController controller)
         AnimatorState death = FindState(controller.layers[0].stateMachine, "Death");
         BlendTree tree = locomotion?.motion as BlendTree;
 
+        AnimationClip configuredDashClip = dash?.motion as AnimationClip;
+        bool hasFrontDashSpeed = configuredDashClip != null &&
+            Mathf.Approximately(dash.speed, configuredDashClip.length / FrontDashDuration);
+
         return hasSpeed && hasWeaponStyle && hasJump && hasDash && hasDashLeft && hasDashRight && hasHit && hasDie &&
-               jump != null && dash != null && dashLeft != null && dashRight != null &&
+               jump != null && dash != null && dashLeft != null && dashRight != null && hasFrontDashSpeed &&
                hit != null && hit.motion != null && death != null && death.motion != null &&
                tree != null && tree.blendType == BlendTreeType.FreeformCartesian2D &&
-               tree.children.Length == 9;
+               tree.children.Length == 11;
     }
 
     private static void EnsureParameter(AnimatorController controller, string name, AnimatorControllerParameterType type)

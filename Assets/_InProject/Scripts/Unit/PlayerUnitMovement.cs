@@ -19,13 +19,17 @@ public class PlayerUnitMovement : MonoBehaviour
     private static readonly int DashRightParameter = Animator.StringToHash("DashRight");
     private static readonly int AttackParameter = Animator.StringToHash("Attack");
     private static readonly int AttackVariantParameter = Animator.StringToHash("AttackVariant");
+    private static readonly int JumpState = Animator.StringToHash("Jump");
+    private static readonly int DashState = Animator.StringToHash("Dash");
+    private static readonly int DashLeftState = Animator.StringToHash("Dash_Left");
+    private static readonly int DashRightState = Animator.StringToHash("Dash_Right");
 
     [SerializeField] private WeaponAnimationStyle weaponStyle = WeaponAnimationStyle.Greatsword;
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private float runSpeed = 7f;
     [SerializeField, Min(0f)] private float dashSpeed = 11f;
     [SerializeField, Min(0f)] private float sideDashSpeed = 11.25f;
-    [SerializeField, Min(0.01f)] private float dashDuration = 0.4f;
+    [SerializeField, Min(0.01f)] private float dashDuration = 0.3f;
     [SerializeField, Min(0.01f)] private float sideDashDuration = 0.267f;
     [SerializeField] private float rotationSpeed = 12f;
     [SerializeField] private float jumpSpeed = 3.886f;
@@ -39,6 +43,11 @@ public class PlayerUnitMovement : MonoBehaviour
     [SerializeField, Min(0.01f)] private float comboResetTime = 1.5f;
     [SerializeField, Min(0f)] private float basicAttackCancelDelay = 0.45f;
     [SerializeField, Min(0f)] private float thirdAttackCancelDelay = 0.9f;
+    [Header("Combat Judgement")]
+    [SerializeField, Min(0f)] private float attackHitDelay = 0.22f;
+    [SerializeField, Min(0.1f)] private float attackReach = 1.35f;
+    [SerializeField, Min(0.1f)] private float attackRadius = 0.8f;
+    [SerializeField, Min(1)] private int attackDamage = 20;
 
     private InputReader_Player _inputReader;
     private PlayerUnit _playerUnit;
@@ -58,6 +67,8 @@ public class PlayerUnitMovement : MonoBehaviour
     private float _lastAttackTime = float.NegativeInfinity;
     private float _attackCancelUnlockTime = float.NegativeInfinity;
     private bool _hasQueuedBasicAttack;
+    private bool _attackHitPending;
+    private float _attackHitTime;
 
     public WeaponAnimationStyle WeaponStyle => weaponStyle;
 
@@ -69,7 +80,7 @@ public void SetWeaponStyle(WeaponAnimationStyle style)
         _attackCancelUnlockTime = float.NegativeInfinity;
         _hasQueuedBasicAttack = false;
         if (_playerUnit != null && _playerUnit.animator != null)
-            _playerUnit.animator.SetFloat(WeaponStyleParameter, (float)style);
+            UpdateActionWeaponState();
     }
 
     private void Awake()
@@ -85,6 +96,7 @@ private void OnEnable()
         _lastAttackTime = float.NegativeInfinity;
         _attackCancelUnlockTime = float.NegativeInfinity;
         _hasQueuedBasicAttack = false;
+        _attackHitPending = false;
         _previousDashInputDirection = 0;
         _dodgeRequested = false;
         _backDodgeReadyTime = float.NegativeInfinity;
@@ -107,6 +119,7 @@ private void OnEnable()
         _inputReader.AttackPreview -= OnAttackPreview;
         _inputReader.MoveRequested -= OnMoveRequested;
         _inputReader.WeaponStyleRequested -= OnWeaponStyleRequested;
+        _playerUnit.SetWeaponsVisible(true);
     }
 
 private void Update()
@@ -114,24 +127,33 @@ private void Update()
         if (_playerUnit.animator == null)
             return;
 
+        UpdateAttackHit();
+
         if (_playerUnit.IsDead || _playerUnit.IsHitReacting)
         {
             _hasQueuedBasicAttack = false;
+            _attackHitPending = false;
             _hasMoveTarget = false;
             _dodgeRequested = false;
             _dashEndTime = float.NegativeInfinity;
+            _backDodgeReadyTime = float.NegativeInfinity;
             UpdateVerticalMovement();
+            _playerUnit.SetWeaponsVisible(true);
+            _playerUnit.animator.SetFloat(WeaponStyleParameter, (float)weaponStyle);
             _playerUnit.animator.SetFloat(SpeedParameter, 0f);
             return;
         }
 
         UpdateQueuedBasicAttack();
         if (UpdateDash())
+        {
+            UpdateActionWeaponState();
             return;
+        }
 
         bool isAttackLocked = IsBasicAttackCancelLocked();
         bool isRunning = _inputReader.IsRunning;
-        Vector2 input = isAttackLocked ? Vector2.zero : _inputReader.Move;
+        Vector2 input = _inputReader.Move;
         Vector3 direction = GetKeyboardMoveDirection(input);
         float inputAmount = direction.sqrMagnitude > 0f ? (isRunning ? 1f : 0.5f) : 0f;
 
@@ -174,10 +196,14 @@ private void Update()
         }
 
         UpdateVerticalMovement();
-        _playerUnit.animator.SetFloat(WeaponStyleParameter, (float)weaponStyle);
+        UpdateActionWeaponState();
+        float animationSpeed = inputAmount;
+        if (!_hasMoveTarget && weaponStyle != WeaponAnimationStyle.Unarmed && input.y < -0.1f)
+            animationSpeed = -inputAmount;
+
         _playerUnit.animator.SetFloat(
             SpeedParameter,
-            inputAmount,
+            animationSpeed,
             animationDampTime,
             Time.deltaTime);
     }
@@ -211,8 +237,10 @@ private Vector3 GetKeyboardMoveDirection(Vector2 input)
         cameraForward.Normalize();
         if (input.sqrMagnitude > Mathf.Epsilon)
         {
+            bool usesBackwardWalk = weaponStyle != WeaponAnimationStyle.Unarmed &&
+                input.y < -Mathf.Epsilon;
             transform.rotation = Quaternion.LookRotation(
-                input.y < -Mathf.Epsilon ? -cameraForward : cameraForward);
+                usesBackwardWalk || input.y >= -Mathf.Epsilon ? cameraForward : -cameraForward);
         }
 
         Vector3 cameraRight = Vector3.Cross(Vector3.up, cameraForward);
@@ -256,6 +284,7 @@ private void OnJump()
         _verticalSpeed = jumpSpeed;
         _jumpAccelerationRemaining = jumpAccelerationDuration;
         _playerUnit.animator.SetTrigger(JumpParameter);
+        UpdateActionWeaponState();
     }
 
 private void OnDodge()
@@ -341,6 +370,21 @@ private void OnAttackPreview(int slot)
     {
         _playerUnit.animator.SetInteger(AttackVariantParameter, variant);
         _playerUnit.animator.SetTrigger(AttackParameter);
+        _attackHitPending = true;
+        _attackHitTime = Time.time + attackHitDelay;
+    }
+
+    private void UpdateAttackHit()
+    {
+        if (!_attackHitPending || Time.time < _attackHitTime)
+            return;
+
+        _attackHitPending = false;
+        if (_playerUnit.IsDead || _playerUnit.IsHitReacting)
+            return;
+
+        Vector3 center = transform.position + Vector3.up + transform.forward * attackReach;
+        CombatHitUtility.DamageSphere(gameObject, center, attackRadius, attackDamage);
     }
 
 private void UpdateVerticalMovement()
@@ -422,7 +466,6 @@ private bool UpdateDash()
             return false;
 
         transform.position += _dashDirection * (_currentDashSpeed * Time.deltaTime);
-        _playerUnit.animator.SetFloat(WeaponStyleParameter, (float)weaponStyle);
         _playerUnit.animator.SetFloat(SpeedParameter, 1f);
         return true;
     }
@@ -448,6 +491,38 @@ private bool PerformBackDodge(bool useCameraBackward)
         return true;
     }
 
+
+    private void UpdateActionWeaponState()
+    {
+        if (_playerUnit.animator == null)
+            return;
+
+        bool actionActive = !_isGrounded || IsDashing() ||
+            Time.time < _backDodgeReadyTime || IsActionAnimationPlaying();
+        _playerUnit.SetWeaponsVisible(!actionActive);
+        _playerUnit.animator.SetFloat(
+            WeaponStyleParameter,
+            actionActive ? (float)WeaponAnimationStyle.Unarmed : (float)weaponStyle);
+    }
+
+    private bool IsActionAnimationPlaying()
+    {
+        Animator animator = _playerUnit.animator;
+        if (animator.runtimeAnimatorController == null)
+            return false;
+
+        if (IsJumpOrDodgeState(animator.GetCurrentAnimatorStateInfo(0).shortNameHash))
+            return true;
+
+        return animator.IsInTransition(0) &&
+            IsJumpOrDodgeState(animator.GetNextAnimatorStateInfo(0).shortNameHash);
+    }
+
+    private static bool IsJumpOrDodgeState(int stateHash)
+    {
+        return stateHash == JumpState || stateHash == DashState ||
+            stateHash == DashLeftState || stateHash == DashRightState;
+    }
 
     private bool IsDashing()
     {

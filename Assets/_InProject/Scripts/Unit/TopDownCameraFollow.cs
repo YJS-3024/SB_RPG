@@ -19,7 +19,7 @@ public class TopDownCameraFollow : MonoBehaviour
     [Header("Zoom")]
     [SerializeField, Min(0.1f)] private float minDistance = 5f;
     [SerializeField, Min(0.1f)] private float maxDistance = 12f;
-    [SerializeField, Min(0f)] private float zoomSensitivity = 0.01f;
+    [SerializeField, Min(0f)] private float zoomSensitivity = 0.2f;
 
     private Transform _target;
     private Vector3 _horizontalOrbitDirection;
