@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SplashSceneLoader : MonoBehaviour
+public class SplashSceneController : MonoBehaviour
 {
     [SerializeField, Min(0f)] private float splashDuration = 5f;
     [SerializeField] private string nextSceneName = "TestScene";

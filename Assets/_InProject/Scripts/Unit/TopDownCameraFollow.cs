@@ -77,7 +77,7 @@ public class TopDownCameraFollow : MonoBehaviour
         LookAtTarget();
     }
 
-private void LateUpdate()
+    private void LateUpdate()
     {
         if (_target == null)
             return;
@@ -155,7 +155,7 @@ private void LateUpdate()
     }
 
 
-private void Update()
+    private void Update()
     {
         SetCursorReleased(IsAltHeld());
         UpdateMouseInput();

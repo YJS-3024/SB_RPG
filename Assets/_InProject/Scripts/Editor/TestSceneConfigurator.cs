@@ -50,8 +50,8 @@ public static class TestSceneConfigurator
         CreateGround(setupRoot.transform);
         CreateCamera(setupRoot.transform);
         CreateLight(setupRoot.transform);
-        if (setupRoot.GetComponent<TestScript>() == null)
-            setupRoot.AddComponent<TestScript>();
+        if (setupRoot.GetComponent<TestSceneController>() == null)
+            setupRoot.AddComponent<TestSceneController>();
 
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);

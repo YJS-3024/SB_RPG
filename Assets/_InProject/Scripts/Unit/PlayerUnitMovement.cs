@@ -72,7 +72,7 @@ public class PlayerUnitMovement : MonoBehaviour
 
     public WeaponAnimationStyle WeaponStyle => weaponStyle;
 
-public void SetWeaponStyle(WeaponAnimationStyle style)
+    public void SetWeaponStyle(WeaponAnimationStyle style)
     {
         weaponStyle = style;
         _attackIndex = 0;
@@ -90,7 +90,7 @@ public void SetWeaponStyle(WeaponAnimationStyle style)
         _groundHeight = transform.position.y;
     }
 
-private void OnEnable()
+    private void OnEnable()
     {
         _attackIndex = 0;
         _lastAttackTime = float.NegativeInfinity;
@@ -122,7 +122,7 @@ private void OnEnable()
         _playerUnit.SetWeaponsVisible(true);
     }
 
-private void Update()
+    private void Update()
     {
         if (_playerUnit.animator == null)
             return;
@@ -223,7 +223,7 @@ private void Update()
         transform.rotation = Quaternion.LookRotation(cameraForward.normalized);
     }
 
-private Vector3 GetKeyboardMoveDirection(Vector2 input)
+    private Vector3 GetKeyboardMoveDirection(Vector2 input)
     {
         Camera camera = Camera.main;
         if (camera == null)
@@ -247,7 +247,7 @@ private Vector3 GetKeyboardMoveDirection(Vector2 input)
         return cameraRight * input.x + cameraForward * input.y;
     }
 
-private void OnWeaponStyleRequested(WeaponAnimationStyle style)
+    private void OnWeaponStyleRequested(WeaponAnimationStyle style)
     {
         if (_playerUnit.IsDead || _playerUnit.IsHitReacting || IsBasicAttackCancelLocked() || IsDashing())
             return;
@@ -274,7 +274,7 @@ private void OnWeaponStyleRequested(WeaponAnimationStyle style)
         _hasMoveTarget = true;
     }
 
-private void OnJump()
+    private void OnJump()
     {
         if (!_isGrounded || _playerUnit.animator == null || _playerUnit.IsDead ||
             _playerUnit.IsHitReacting || IsBasicAttackCancelLocked() || IsDashing())
@@ -287,7 +287,7 @@ private void OnJump()
         UpdateActionWeaponState();
     }
 
-private void OnDodge()
+    private void OnDodge()
     {
         if (_playerUnit.IsDead || _playerUnit.IsHitReacting)
             return;
@@ -296,22 +296,28 @@ private void OnDodge()
     }
 
 
-private void OnAttack()
+    private void OnAttack()
+    {
+        TryBasicAttack();
+    }
+
+    public bool TryBasicAttack()
     {
         if (_playerUnit.animator == null || _playerUnit.IsDead || _playerUnit.IsHitReacting ||
             weaponStyle == WeaponAnimationStyle.Unarmed || IsDashing())
-            return;
+            return false;
 
         if (IsBasicAttackCancelLocked())
         {
             _hasQueuedBasicAttack = true;
-            return;
+            return true;
         }
 
         ExecuteBasicAttack();
+        return true;
     }
 
-private void ExecuteBasicAttack()
+    private void ExecuteBasicAttack()
     {
         float now = Time.time;
         if (now - _lastAttackTime >= comboResetTime)
@@ -342,19 +348,25 @@ private void ExecuteBasicAttack()
     }
 
 
-private void OnAttackSkill()
+    private void OnAttackSkill()
+    {
+        TryAttackSkill();
+    }
+
+    public bool TryAttackSkill()
     {
         if (_playerUnit.animator == null || _playerUnit.IsDead || _playerUnit.IsHitReacting ||
             weaponStyle != WeaponAnimationStyle.Greatsword ||
             IsBasicAttackCancelLocked() || IsDashing())
-            return;
+            return false;
 
         PlayAttack(7);
         _attackIndex = 0;
         _lastAttackTime = float.NegativeInfinity;
+        return true;
     }
 
-private void OnAttackPreview(int slot)
+    private void OnAttackPreview(int slot)
     {
         if (_playerUnit.animator == null || _playerUnit.IsDead || _playerUnit.IsHitReacting ||
             slot < 1 ||
@@ -387,7 +399,7 @@ private void OnAttackPreview(int slot)
         CombatHitUtility.DamageSphere(gameObject, center, attackRadius, attackDamage);
     }
 
-private void UpdateVerticalMovement()
+    private void UpdateVerticalMovement()
     {
         if (_isGrounded)
             return;
@@ -413,7 +425,7 @@ private void UpdateVerticalMovement()
     }
 
 
-private bool UpdateDash()
+    private bool UpdateDash()
     {
         Vector2 move = _inputReader.Move;
         bool dodgeRequested = _dodgeRequested;
@@ -470,7 +482,7 @@ private bool UpdateDash()
         return true;
     }
 
-private bool PerformBackDodge(bool useCameraBackward)
+    private bool PerformBackDodge(bool useCameraBackward)
     {
         Vector3 backward = -transform.forward;
         if (useCameraBackward)

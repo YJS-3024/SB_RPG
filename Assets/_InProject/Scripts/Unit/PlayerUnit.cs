@@ -171,6 +171,9 @@ public class PlayerUnit : UnitBase, IDamageable
         if (GetComponent<PlayerUnitMovement>() == null)
             gameObject.AddComponent<PlayerUnitMovement>();
 
+        if (GetComponent<PlayerAutoCombat>() == null)
+            gameObject.AddComponent<PlayerAutoCombat>();
+
         CapsuleCollider hitCollider = GetComponent<CapsuleCollider>();
         if (hitCollider == null)
             hitCollider = gameObject.AddComponent<CapsuleCollider>();
@@ -288,7 +291,7 @@ public class PlayerUnit : UnitBase, IDamageable
     }
 
 
-public bool ReceiveDamage(int damage, GameObject attacker, Vector3 hitPoint)
+    public bool ReceiveDamage(int damage, GameObject attacker, Vector3 hitPoint)
     {
         if (_isDead || damage <= 0)
             return false;
@@ -300,7 +303,7 @@ public bool ReceiveDamage(int damage, GameObject attacker, Vector3 hitPoint)
         return PlayHitReaction();
     }
 
-public bool PlayHitReaction()
+    public bool PlayHitReaction()
     {
         if (_isDead || animator == null)
             return false;

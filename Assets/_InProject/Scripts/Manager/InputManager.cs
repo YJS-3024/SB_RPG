@@ -35,6 +35,20 @@ public class InputManager : MonoSingleton<InputManager>
         return true;
     }
 
+    protected override void Destroy()
+    {
+        if (bindingInput != null)
+        {
+            MoveAction.started -= OnMoveStart;
+            MoveAction.canceled -= OnMoveCancel;
+            MoveAction.performed -= OnMovePerformed;
+            bindingInput.Dispose();
+        }
+
+        bindingInput = null;
+        _isInitialized = false;
+    }
+
     private void OnMoveStart(InputAction.CallbackContext context)
     {
         if (context.ReadValue<Vector2>() != Vector2.zero)
@@ -50,19 +64,5 @@ public class InputManager : MonoSingleton<InputManager>
     {
         _moveVector = Vector2.zero;
         _isMoveDir = false;
-    }
-
-    protected override void Destroy()
-    {
-        if (bindingInput != null)
-        {
-            MoveAction.started -= OnMoveStart;
-            MoveAction.canceled -= OnMoveCancel;
-            MoveAction.performed -= OnMovePerformed;
-            bindingInput.Dispose();
-        }
-
-        bindingInput = null;
-        _isInitialized = false;
     }
 }

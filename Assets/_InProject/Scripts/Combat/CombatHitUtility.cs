@@ -9,6 +9,7 @@ public interface IDamageable
 public static class CombatHitUtility
 {
     private static readonly Collider[] HitResults = new Collider[16];
+    private static readonly IDamageable[] DamagedTargets = new IDamageable[HitResults.Length];
 
     public static int DamageSphere(GameObject attacker, Vector3 center, float radius, int damage)
     {
@@ -20,7 +21,6 @@ public static class CombatHitUtility
             QueryTriggerInteraction.Collide);
 
         int hitCount = 0;
-        IDamageable[] damagedTargets = new IDamageable[HitResults.Length];
         int damagedTargetCount = 0;
 
         for (int i = 0; i < count; i++)
@@ -31,14 +31,17 @@ public static class CombatHitUtility
                 continue;
 
             IDamageable target = FindDamageable(hit.transform);
-            if (target == null || !target.IsAlive || Contains(damagedTargets, damagedTargetCount, target))
+            if (target == null || !target.IsAlive || Contains(DamagedTargets, damagedTargetCount, target))
                 continue;
 
-            damagedTargets[damagedTargetCount++] = target;
+            DamagedTargets[damagedTargetCount++] = target;
             Vector3 hitPoint = hit.ClosestPoint(center);
             if (target.ReceiveDamage(Mathf.Max(0, damage), attacker, hitPoint))
                 hitCount++;
         }
+
+        for (int i = 0; i < damagedTargetCount; i++)
+            DamagedTargets[i] = null;
 
         return hitCount;
     }
